@@ -1,0 +1,34 @@
+<h1><code ng:non-bindable="">ccAutoRefreshBtn</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">cc.autorefresh.ccAutoRefreshBtn</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="cc-autorefresh-ccautorefreshbtn-directive-page cc-autorefresh-ccautorefreshbtn-directive-ccautorefreshbtn-page"><p>Schedule a expression to run every n number of milliseconds and assign the return value to the scope.
+Extends <a href="#/api/cc.autorefresh.ccAutoRefreshFn.directive:ccAutoRefreshFn">ccAutoRefreshFn</a> with a button for the user
+to:</p>
+<ul>
+<li>pause and refresh on demand</li>
+<li>cancel a refresh in progress</li>
+</ul>
+<h5 id="description_parameters">Parameters</h5>
+<p>For details on all the parameters that this directive accepts see
+<a href="#/api/cc.autorefresh.ccAutoRefreshFn.directive:ccAutoRefreshFn">ccAutoRefreshFn</a></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;cc-auto-refresh-btn
+       cc-auto-refresh-fn="{expression}"
+       refresh-interval="{expression}"
+       refresh-model="{expression}"
+       [refresh-translations="{expression}"]&gt;
+&lt;/cc-auto-refresh-btn&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ccAutoRefreshFn</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshbtn-directive-page cc-autorefresh-ccautorefreshbtn-directive-ccautorefreshbtn-page"><p>An expression to schedule for execution.</p>
+</div></td></tr><tr><td>refreshInterval</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshbtn-directive-page cc-autorefresh-ccautorefreshbtn-directive-ccautorefreshbtn-page"><p>Angular expression that determines the interval (milliseconds) that <code>refreshFn</code> will be executed.</p>
+</div></td></tr><tr><td>refreshModel</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshbtn-directive-page cc-autorefresh-ccautorefreshbtn-directive-ccautorefreshbtn-page"><p><strong>Assignable</strong> angular expression to data-bind the value returned by <code>refreshFn</code>.</p>
+</div></td></tr><tr><td>refreshTranslations <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshbtn-directive-page cc-autorefresh-ccautorefreshbtn-directive-ccautorefreshbtn-page"><p>An expression that returns overrides the default translations.</p>
+</div></td></tr></tbody></table></div>
+</div>

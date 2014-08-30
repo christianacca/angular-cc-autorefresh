@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cc.autorefresh.demo" id="top">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Angular auto refresh directives | Coding Monster</title>
+    <meta name="description" content="AngularJS (Angular) directives for scheduling a routine to refresh $scope. No 3rd party JS dependencies (jQuery, bootstrap JS) required">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-touch.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-mocks.js"></script>
+    <script src="//cdn.jsdelivr.net/angular.bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="cc-autorefresh-tpls-0.1.0.js"></script>
+    <script src="assets/plunker.js"></script>
+    <script src="assets/app.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/rainbow.css"/>
+    <link rel="stylesheet" href="assets/demo.css"/>
+    <link rel="author" href="http://codingmonster.co.uk">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+</head>
+<body class="ng-cloak" ng-controller="MainCtrl">
+<header class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand visible-xs" href="#">Angular Auto Refresh</a>
+            </div>
+            <nav class="hidden-xs">
+                <ul class="nav navbar-nav">
+                    <a href="#top" role="button" class="navbar-brand">
+                        <img src="assets/brand-logo.png" width="160px" class="hidden-xs" title="Angular Auto Refresh" />
+                    </a>
+                    <li class="dropdown">
+                        <a role="button" class="dropdown-toggle">
+                            Directives <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#ccAutoRefreshBtn">Cc Auto Refresh Btn</a></li><li><a href="#ccAutoRefreshFn">Cc Auto Refresh Fn</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#getting_started">Getting started</a></li>
+                </ul>
+            </nav>
+            <nav class="visible-xs" collapse="!isCollapsed">
+                <ul class="nav navbar-nav">
+                    <li><a href="#getting_started" ng-click="isCollapsed = !isCollapsed">Getting started</a></li>
+                    <li><a href="#directives_small" ng-click="isCollapsed = !isCollapsed">Directives</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<div class="header-placeholder"></div>
+<div role="main">
+    <header class="bs-header text-center" id="overview">
+        <div class="container">
+            <h1>
+                Angular Auto Refresh
+            </h1>
+
+            <p>Directives to schedule work that refreshes $scope...</p>
+
+<!--
+            <p>
+                <a class="btn btn-outline-inverse btn-lg" href="https://github.com/christianacca/angular-cc-autorefresh"><i class="icon-github"></i>Code on Github</a>
+                <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.1.0)</small>
+                </button>
+                <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
+            </p>
+-->
+        </div>
+        <div class="bs-social container" style="display: none">
+            <ul class="bs-social-buttons">
+                <li>
+                    <a href="https://twitter.com/share" class="twitter-share-button"
+                       data-hashtags="angularjs">Tweet</a>
+                    <script>!function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "//platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");</script>
+                </li>
+                <li>
+                    <!-- Place this tag where you want the +1 button to render. -->
+                    <div class="g-plusone" data-size="medium"></div>
+
+                    <!-- Place this tag after the last +1 button tag. -->
+                    <script type="text/javascript">
+                        (function () {
+                            var po = document.createElement('script');
+                            po.type = 'text/javascript';
+                            po.async = true;
+                            po.src = 'https://apis.google.com/js/plusone.js';
+                            var s = document.getElementsByTagName('script')[0];
+                            s.parentNode.insertBefore(po, s);
+                        })();
+                    </script>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="bs-sidebar visible-xs" id="directives_small">
+                    <ul class="nav bs-sidenav">
+                        <li><a href="#"><strong>Directives</strong></a></li>
+                        
+                            <li><a href="#ccAutoRefreshBtn">Cc Auto Refresh Btn</a></li>
+                        
+                            <li><a href="#ccAutoRefreshFn">Cc Auto Refresh Fn</a></li>
+                        
+                    </ul>
+                </section>
+
+                <section id="getting_started">
+                    <div class="page-header">
+                        <h1>Getting started</h1>
+                    </div>
+
+                    <h3>Installation</h3>
+
+                    <h4>1. Reference dependencies</h4>
+                    <ul>
+                        <li><a href="http://angularjs.org/">AngularJS</a>. eg:
+                            <ul>
+                                <li><code>&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js&quot;&gt;&lt;/script&gt;</code></li>
+                            </ul>
+                        </li>
+                        <li><a href="http://getbootstrap.com/">Bootstrap’s <strong>CSS</strong></a>. eg:
+                            <ul>
+                                <li><code>&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css&quot;
+                                    rel=&quot;stylesheet&quot;/&gt;</code></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>2. Reference <strong>angular-cc-autorefresh</strong></h4>
+                    <ul>
+                        <li>Download <code>cc-autorefresh-tpls-0.1.0.min.js</code> script
+                            (<a href="https://github.com/christianacca/angular-cc-autorefresh/tree/gh-pages/cc-autorefresh-tpls-0.1.0.min.js">Direct link</a>)
+                        </li>
+                        <li>Add the reference (remember to replace <em>your/path</em>) :
+                            <ul>
+                                <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.1.0.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>3. Add dependencies on the <code>cc.autorefresh</code> AngularJS module</h4>
+                    <ul>
+                        <li>
+                            <code class="javascript">angular.module(&#39;myModule&#39;, [&#39;cc-autorefresh&#39;]);
+                            </code>
+                        </li>
+                    </ul>
+
+                </section>
+                
+                    <section id="ccAutoRefreshBtn">
+                        <div class="page-header">
+                          <h1>Cc Auto Refresh Btn<small>
+                              (<a target="_blank" href="https://github.com/christianacca/angular-cc-autorefresh/tree/master/src/ccAutoRefreshBtn">cc.autorefresh.ccAutoRefreshBtn</a>)
+                          </small></h1>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 show-grid">
+                                <div ng-controller="AutoRefreshBtnDemoCtrl as vm">
+
+    <div class="page-header">
+        <h1>
+
+            {{vm.lists[0].title}}
+
+            <cc-auto-refresh-btn
+                    class="btn-group-sm"
+                    cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
+                    refresh-interval="vm.lists[0].interval"
+                    refresh-model="vm.lists[0].data"
+                    refresh-on-refreshed="vm.lists[0].setLastRefreshed(eventArgs)">
+                {{vm.lists[0].lastRefresh | date:'HH:mm:ss'}}
+            </cc-auto-refresh-btn>
+
+        </h1>
+    </div>
+
+    <pre>{{ vm.lists[0].data | json}}</pre>
+
+    <div class="page-header">
+        <h1>
+
+            {{vm.lists[1].title}}
+            <small> As at: {{ vm.lists[1].lastRefresh | date:'yyyy-MM-dd HH:mm:ss'}}</small>
+
+            <cc-auto-refresh-btn
+                    class="btn-group-sm"
+                    cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
+                    refresh-interval="vm.lists[1].interval"
+                    refresh-paused="vm.lists[1].paused"
+                    refresh-model="vm.lists[1].data"
+                    refresh-busy="vm.lists[1].refreshBusy"
+                    refresh-on-refreshed="vm.lists[1].setLastRefreshed(eventArgs)"
+                    ng-disabled="vm.lists[1].listDisabled"
+                    ng-hide="vm.lists[1].hideButton">
+            </cc-auto-refresh-btn>
+
+        </h1>
+    </div>
+
+    <pre ng-disabled="vm.lists[1].listDisabled">{{ vm.lists[1].data | json}}</pre>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="checkbox" ng-disabled="vm.lists[1].refreshBusy">
+                    <input type="checkbox" ng-model="vm.lists[1].listDisabled" ng-disabled="vm.lists[1].refreshBusy">
+                    Disable list?
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="vm.lists[1].hideButton"> Hide button?
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="checkbox" ng-disabled="vm.lists[1].refreshBusy">
+                    <input type="checkbox" ng-model="vm.lists[1].paused" ng-disabled="vm.lists[1].refreshBusy">
+                    Paused?
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <p class='lead'>
+The <strong>cc-auto-refresh-btn directive</strong> extends <code>cc-auto-refresh-fn</code> directive with a button
+that enables the user to pause and refresh on demand, and to cancel a refresh in progress 
+</p>
+
+<p><em>Optionally</em> use:</p>
+
+<ul>
+<li><code>ng-disabled</code> attribute to disable the button</li>
+<li><code>ng-hide</code> attribute to show/hide the button</li>
+</ul>
+
+<h3>Overriding translations</h3>
+
+<p>The service <code>ccAutoRefreshDefaultTranslations</code> provides the directive with translations for tooltips, etc. Custom
+translations can be provided either:</p>
+
+<ul>
+<li>supplying an expression to <code>refresh-translations</code> attribute</li>
+<li>globally by defining your own service named <code>ccAutoRefreshDefaultTranslations</code>  </li>
+</ul>
+
+<h3>API documentation</h3>
+
+<p>See <a href="ref-docs/#/api/cc.autorefresh.ccAutoRefreshBtn.directive:ccAutoRefreshBtn">API reference</a></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row code">
+                            <div class="col-md-12" ng-controller="PlunkerCtrl">
+                                <div class="pull-right">
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.0', 'ccAutoRefreshBtn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                </div>
+                                <tabset>
+                                    <tab heading="Markup">
+                                        <div plunker-content="markup">
+                                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AutoRefreshBtnDemoCtrl as vm&quot;&gt;
+
+    &lt;div class=&quot;page-header&quot;&gt;
+        &lt;h1&gt;
+
+            {{vm.lists[0].title}}
+
+            &lt;cc-auto-refresh-btn
+                    class=&quot;btn-group-sm&quot;
+                    cc-auto-refresh-fn=&quot;vm.refreshList(cancellationToken)&quot;
+                    refresh-interval=&quot;vm.lists[0].interval&quot;
+                    refresh-model=&quot;vm.lists[0].data&quot;
+                    refresh-on-refreshed=&quot;vm.lists[0].setLastRefreshed(eventArgs)&quot;&gt;
+                {{vm.lists[0].lastRefresh | date:&#x27;HH:mm:ss&#x27;}}
+            &lt;/cc-auto-refresh-btn&gt;
+
+        &lt;/h1&gt;
+    &lt;/div&gt;
+
+    &lt;pre&gt;{{ vm.lists[0].data | json}}&lt;/pre&gt;
+
+    &lt;div class=&quot;page-header&quot;&gt;
+        &lt;h1&gt;
+
+            {{vm.lists[1].title}}
+            &lt;small&gt; As at: {{ vm.lists[1].lastRefresh | date:&#x27;yyyy-MM-dd HH:mm:ss&#x27;}}&lt;/small&gt;
+
+            &lt;cc-auto-refresh-btn
+                    class=&quot;btn-group-sm&quot;
+                    cc-auto-refresh-fn=&quot;vm.refreshList(cancellationToken)&quot;
+                    refresh-interval=&quot;vm.lists[1].interval&quot;
+                    refresh-paused=&quot;vm.lists[1].paused&quot;
+                    refresh-model=&quot;vm.lists[1].data&quot;
+                    refresh-busy=&quot;vm.lists[1].refreshBusy&quot;
+                    refresh-on-refreshed=&quot;vm.lists[1].setLastRefreshed(eventArgs)&quot;
+                    ng-disabled=&quot;vm.lists[1].listDisabled&quot;
+                    ng-hide=&quot;vm.lists[1].hideButton&quot;&gt;
+            &lt;/cc-auto-refresh-btn&gt;
+
+        &lt;/h1&gt;
+    &lt;/div&gt;
+
+    &lt;pre ng-disabled=&quot;vm.lists[1].listDisabled&quot;&gt;{{ vm.lists[1].data | json}}&lt;/pre&gt;
+
+    &lt;div class=&quot;row&quot;&gt;
+        &lt;div class=&quot;col-md-3&quot;&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;label class=&quot;checkbox&quot; ng-disabled=&quot;vm.lists[1].refreshBusy&quot;&gt;
+                    &lt;input type=&quot;checkbox&quot; ng-model=&quot;vm.lists[1].listDisabled&quot; ng-disabled=&quot;vm.lists[1].refreshBusy&quot;&gt;
+                    Disable list?
+                &lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;col-md-3&quot;&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;label class=&quot;checkbox&quot;&gt;
+                    &lt;input type=&quot;checkbox&quot; ng-model=&quot;vm.lists[1].hideButton&quot;&gt; Hide button?
+                &lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;col-md-3&quot;&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;label class=&quot;checkbox&quot; ng-disabled=&quot;vm.lists[1].refreshBusy&quot;&gt;
+                    &lt;input type=&quot;checkbox&quot; ng-model=&quot;vm.lists[1].paused&quot; ng-disabled=&quot;vm.lists[1].refreshBusy&quot;&gt;
+                    Paused?
+                &lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+</code></pre>
+                                        </div>
+                                    </tab>
+                                    <tab heading="JavaScript">
+                                        <div plunker-content="javascript">
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;cc.autorefresh.demo&#x27;).controller(&#x27;AutoRefreshBtnDemoCtrl&#x27;, function ($q, $http) {
+    &#x27;use strict&#x27;;
+
+    var vm = this;
+
+    function refreshList(cancellationToken) {
+        var request = {
+            url: &#x27;/items&#x27;,
+            method: &#x27;GET&#x27;,
+            timeout: cancellationToken
+        };
+        return $http(request).then(function (response) {
+            return response.data;
+        });
+    }
+
+    function setLastRefreshed(list, eventArgs) {
+        list.lastRefresh = eventArgs.when;
+    }
+
+    function initialise() {
+        vm.refreshList = refreshList;
+
+        vm.lists = [{
+                interval: 5000,
+                title: &#x27;List 1&#x27;,
+                data: [&#x27;Item 0&#x27;],
+                lastRefresh: new Date()
+            }, {
+                interval: 5000,
+                title: &#x27;List 2&#x27;,
+                data: [&#x27;Item 0&#x27;],
+                lastRefresh: new Date()
+            }];
+        vm.lists[0].setLastRefreshed = setLastRefreshed.bind(null, vm.lists[0]);
+        vm.lists[1].setLastRefreshed = setLastRefreshed.bind(null, vm.lists[1]);
+    }
+
+    initialise();
+})
+    .run(function ($httpBackend) {
+
+        var counter = 0;
+        // fakes a backend
+        $httpBackend.whenGET(&#x27;/items&#x27;).respond(function () {
+            return  [
+                200,
+                JSON.stringify([&#x27;Item &#x27; + (++counter)]),
+                {},
+                &#x27;OK&#x27;
+            ];
+        });
+    });</code></pre>
+                                        </div>
+                                    </tab>
+                                </tabset>
+                            </div>
+                        </div>
+                    </section>
+                    <script>angular.module('cc.autorefresh.demo').controller('AutoRefreshBtnDemoCtrl', function ($q, $http) {
+    'use strict';
+
+    var vm = this;
+
+    function refreshList(cancellationToken) {
+        var request = {
+            url: '/items',
+            method: 'GET',
+            timeout: cancellationToken
+        };
+        return $http(request).then(function (response) {
+            return response.data;
+        });
+    }
+
+    function setLastRefreshed(list, eventArgs) {
+        list.lastRefresh = eventArgs.when;
+    }
+
+    function initialise() {
+        vm.refreshList = refreshList;
+
+        vm.lists = [{
+                interval: 5000,
+                title: 'List 1',
+                data: ['Item 0'],
+                lastRefresh: new Date()
+            }, {
+                interval: 5000,
+                title: 'List 2',
+                data: ['Item 0'],
+                lastRefresh: new Date()
+            }];
+        vm.lists[0].setLastRefreshed = setLastRefreshed.bind(null, vm.lists[0]);
+        vm.lists[1].setLastRefreshed = setLastRefreshed.bind(null, vm.lists[1]);
+    }
+
+    initialise();
+})
+    .run(function ($httpBackend) {
+
+        var counter = 0;
+        // fakes a backend
+        $httpBackend.whenGET('/items').respond(function () {
+            return  [
+                200,
+                JSON.stringify(['Item ' + (++counter)]),
+                {},
+                'OK'
+            ];
+        });
+    });</script>
+                
+                    <section id="ccAutoRefreshFn">
+                        <div class="page-header">
+                          <h1>Cc Auto Refresh Fn<small>
+                              (<a target="_blank" href="https://github.com/christianacca/angular-cc-autorefresh/tree/master/src/ccAutoRefreshFn">cc.autorefresh.ccAutoRefreshFn</a>)
+                          </small></h1>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 show-grid">
+                                <div ng-controller="AutoRefreshFnDemoCtrl as vm">
+
+    <p> Refreshed list as at <em>{{vm.lastRefresh | date:'medium'}}</em>
+        <i style="color: #d3d3d3" class="glyphicon glyphicon-refresh" ng-show="vm.refreshBusy"></i>
+    </p>
+    <pre>{{ vm.list | json}}</pre>
+
+    <cc-auto-refresh-fn
+            refresh-fn="vm.refreshList()"
+            refresh-interval="vm.refreshOpts.interval"
+            refresh-model="vm.list"
+            refresh-paused="vm.refreshOpts.paused"
+            refresh-busy="vm.refreshBusy"
+            refresh-on-refreshed="vm.setLastRefreshed(eventArgs)">
+    </cc-auto-refresh-fn>
+
+    <div class="form-group">
+        <label class="control-label" for="inputInterval">Interval:</label>
+        <input type="number" class="form-control input-sm" id="inputInterval" placeholder="Seconds"
+               ng-model="vm.refreshOpts.interval">
+        <p class="help-block">Interval in milliseconds</p>
+    </div>
+    <div class="form-group">
+        <label class="checkbox" ng-disabled="vm.refreshBusy">
+            <input type="checkbox" ng-model="vm.refreshOpts.paused" ng-disabled="vm.refreshBusy"> Paused?
+        </label>
+    </div>
+</div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class='lead'>
+The <strong>cc-auto-refresh-fn directive</strong> will schedule an expression to run every 
+<em>n</em> number of milliseconds and assign the return value to the scope.
+</p>
+
+<p>Use <code>cc-auto-refresh-fn</code> or <code>refresh-fn</code> attribute to supply the expression, <code>refresh-model</code> to data-bind the result 
+to the scope and <code>refresh-interval</code> to control the frequency of execution.</p>
+
+<p><em>Optionally</em> use:</p>
+
+<ul>
+<li>the <code>refresh-paused</code> attribute to pause the schedule as required</li>
+<li>the <code>refresh-on-refreshed</code> attribute to specify an expression that should be executed on successful refreshes.</li>
+<li>the <code>refresh-busy</code> attribute to set a flag on the scope when the execution is in progress</li>
+</ul>
+
+<h3>API documentation</h3>
+
+<p>See <a href="ref-docs/#/api/cc.autorefresh.ccAutoRefreshFn.directive:ccAutoRefreshFn">API reference</a></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row code">
+                            <div class="col-md-12" ng-controller="PlunkerCtrl">
+                                <div class="pull-right">
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.0', 'ccAutoRefreshFn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                </div>
+                                <tabset>
+                                    <tab heading="Markup">
+                                        <div plunker-content="markup">
+                                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AutoRefreshFnDemoCtrl as vm&quot;&gt;
+
+    &lt;p&gt; Refreshed list as at &lt;em&gt;{{vm.lastRefresh | date:&#x27;medium&#x27;}}&lt;/em&gt;
+        &lt;i style=&quot;color: #d3d3d3&quot; class=&quot;glyphicon glyphicon-refresh&quot; ng-show=&quot;vm.refreshBusy&quot;&gt;&lt;/i&gt;
+    &lt;/p&gt;
+    &lt;pre&gt;{{ vm.list | json}}&lt;/pre&gt;
+
+    &lt;cc-auto-refresh-fn
+            refresh-fn=&quot;vm.refreshList()&quot;
+            refresh-interval=&quot;vm.refreshOpts.interval&quot;
+            refresh-model=&quot;vm.list&quot;
+            refresh-paused=&quot;vm.refreshOpts.paused&quot;
+            refresh-busy=&quot;vm.refreshBusy&quot;
+            refresh-on-refreshed=&quot;vm.setLastRefreshed(eventArgs)&quot;&gt;
+    &lt;/cc-auto-refresh-fn&gt;
+
+    &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;control-label&quot; for=&quot;inputInterval&quot;&gt;Interval:&lt;/label&gt;
+        &lt;input type=&quot;number&quot; class=&quot;form-control input-sm&quot; id=&quot;inputInterval&quot; placeholder=&quot;Seconds&quot;
+               ng-model=&quot;vm.refreshOpts.interval&quot;&gt;
+        &lt;p class=&quot;help-block&quot;&gt;Interval in milliseconds&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;checkbox&quot; ng-disabled=&quot;vm.refreshBusy&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; ng-model=&quot;vm.refreshOpts.paused&quot; ng-disabled=&quot;vm.refreshBusy&quot;&gt; Paused?
+        &lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                                        </div>
+                                    </tab>
+                                    <tab heading="JavaScript">
+                                        <div plunker-content="javascript">
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;cc.autorefresh.demo&#x27;).controller(&#x27;AutoRefreshFnDemoCtrl&#x27;, function ($q, $timeout) {
+    &#x27;use strict&#x27;;
+
+    var counter = 0,
+        vm = this;
+
+    function refreshList(){
+        // simulate async
+        return $timeout(function(){
+            return [&#x27;Item &#x27; + (++counter), &#x27;Item &#x27; + (++counter)];
+        }, 500);
+    }
+
+    function setLastRefreshed(eventArgs){
+        vm.lastRefresh = eventArgs.when;
+    }
+
+    function initialise(){
+        vm.refreshList = refreshList;
+        vm.setLastRefreshed = setLastRefreshed;
+
+        vm.refreshOpts = {
+            interval: 2000,
+            paused: false
+        };
+        vm.list = [];
+    }
+
+    initialise();
+});</code></pre>
+                                        </div>
+                                    </tab>
+                                </tabset>
+                            </div>
+                        </div>
+                    </section>
+                    <script>angular.module('cc.autorefresh.demo').controller('AutoRefreshFnDemoCtrl', function ($q, $timeout) {
+    'use strict';
+
+    var counter = 0,
+        vm = this;
+
+    function refreshList(){
+        // simulate async
+        return $timeout(function(){
+            return ['Item ' + (++counter), 'Item ' + (++counter)];
+        }, 500);
+    }
+
+    function setLastRefreshed(eventArgs){
+        vm.lastRefresh = eventArgs.when;
+    }
+
+    function initialise(){
+        vm.refreshList = refreshList;
+        vm.setLastRefreshed = setLastRefreshed;
+
+        vm.refreshOpts = {
+            interval: 2000,
+            paused: false
+        };
+        vm.list = [];
+    }
+
+    initialise();
+});</script>
+                
+            </div>
+        </div>
+    </div><!-- /.container -->
+</div><!-- /.main -->
+<footer class="footer">
+    <div class="container">
+        <p>Created by <a href="http://codingmonster.co.uk">Christian Crowhurst</a>; Document and build process "borrowed" from <a href="https://github.com/angular-ui" target="_blank">Angular-UI</a>.</p>
+        <p>Code licensed under <a href="https://github.com/christianacca/angular-cc-autorefresh/blob/master/LICENSE">MIT License</a>.</p>
+        <p><a href="https://github.com/christianacca/angular-cc-autorefresh/issues?state=open">Issues</a></p>
+    </div>
+</footer>
+<script src="assets/rainbow.js"></script>
+<script src="assets/rainbow-generic.js"></script>
+<script src="assets/rainbow-javascript.js"></script>
+<script src="assets/rainbow-html.js"></script>
+<script type="text/ng-template" id="downloadModal.html">
+    <div class="modal-header"><h4 class="modal-title">Download Angular Auto Refresh</h4></div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><strong>Build</strong></label>
+            <div class="col-sm-9">
+              <span class="btn-group">
+                <button type="button" class="btn btn-default" ng-model="options.minified" btn-radio="true">Minified</button>
+                <button type="button" class="btn btn-default" ng-model="options.minified" btn-radio="false">Uncompressed</button>
+              </span>
+              <small class="help-block">Use <b>Minified</b> version in your deployed application. <b>Uncompressed</b> source code is useful only for debugging and development purpose.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><strong>Include Templates</strong></label>
+            <div class="col-sm-9">
+              <span class="btn-group">
+                <button type="button" class="btn btn-default" ng-model="options.tpls" btn-radio="true">Yes</button>
+                <button type="button" class="btn btn-default" ng-model="options.tpls" btn-radio="false">No</button>
+              </span>
+              <small class="help-block">Whether you want to include the <i>default templates</i>, bundled with most of the directives. These templates are based on Bootstrap's markup and CSS.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><strong>Bower</strong></label>
+            <div class="col-sm-9">
+              <small>If you are using Bower just run:</small>
+              <pre style="margin-bottom:0;">bower install angular-cc-autorefresh</pre>
+              <small class="help-block"><a href="http://bower.io/" target="_blank">Bower</a> is a package manager for the web.</small>
+            </div>
+          </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default" ng-click="cancel()">Close</a>
+        <a class="btn btn-primary" ng-href="{{download('0.1.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.1.0</a>
+    </div>
+</script>
+<script type="text/ng-template" id="buildModal.html">
+    <div class="modal-header">
+      <h4>
+      Create a Custom Build
+      <br>
+      <small>Select the modules you wish to download</small>
+      </h4>
+    </div>
+    <div class="modal-body">
+        <div ng-show="buildErrorText">
+            <h4 style="text-align: center;">{{buildErrorText}}</h4>
+        </div>
+        <div ng-hide="buildErrorText">
+            
+              
+                <div class="btn-group" style="width: 100%;">
+              
+              <button type="button" class="btn btn-default"
+               style="width: 33%; border-radius: 0;"
+               ng-class="{'btn-primary': module.ccAutoRefreshFn}"
+               ng-model="module.ccAutoRefreshFn"
+               btn-checkbox
+               ng-change="selectedChanged('ccAutoRefreshFn', module.ccAutoRefreshFn)">
+                  Cc Auto Refresh Fn
+              </button>
+              
+            
+              
+              <button type="button" class="btn btn-default"
+               style="width: 33%; border-radius: 0;"
+               ng-class="{'btn-primary': module.ccAutoRefreshBtn}"
+               ng-model="module.ccAutoRefreshBtn"
+               btn-checkbox
+               ng-change="selectedChanged('ccAutoRefreshBtn', module.ccAutoRefreshBtn)">
+                  Cc Auto Refresh Btn
+              </button>
+              
+            
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default" ng-click="cancel()">Close</a>
+        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-href="{{selectedModules.length ? download(selectedModules) : ''}}">
+            <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
+        </a>
+    </div>
+</script>
+
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37467169-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+<script src="assets/smoothscroll-angular-custom.js"></script>
+</body>
+</html>

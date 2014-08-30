@@ -1,0 +1,63 @@
+<h1><code ng:non-bindable="">ccAutoRefreshFn</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">cc.autorefresh.ccAutoRefreshFn</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="cc-autorefresh-ccautorefreshfn-directive-page cc-autorefresh-ccautorefreshfn-directive-ccautorefreshfn-page"><p>Schedule a expression to run every n number of milliseconds and assign the return value to the scope.</p>
+<p>The <code>ccAutoRefreshFn</code> directive creates and exposes the
+<a href="#/api/cc.autorefresh.ccAutoRefreshFn.controller:ccAutoRefreshFnCtl">ccAutoRefreshFnCtl</a> controller.
+This controller can be <code>required</code> by another directive which can then <em>extend</em> the <code>ccAutoRefreshFn</code>, for example
+by adding a GUI</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;cc-auto-refresh-fn
+       refresh-fn="{expression}"
+       [refresh-paused="{expression}"]
+       refresh-interval="{expression}"
+       refresh-model="{expression}"
+       [refresh-busy="{expression}"]
+       [refresh-on-refreshed="{expression}"]&gt;
+&lt;/cc-auto-refresh-fn&gt;</pre>
+as attribute<pre class="prettyprint linenums">&lt;ANY cc-auto-refresh-fn="{expression}"
+     [refresh-paused="{expression}"]
+     refresh-interval="{expression}"
+     refresh-model="{expression}"
+     [refresh-busy="{expression}"]
+     [refresh-on-refreshed="{expression}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ccAutoRefreshFn|refreshFn</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshfn-directive-page cc-autorefresh-ccautorefreshfn-directive-ccautorefreshfn-page"><p>An expression to schedule for execution.</p>
+<p> On <em>successfully</em> execution, the return value is assigned to the scope field identified by <code>refreshModel</code>.</p>
+<p> Where the expression returns a <em>rejected</em> promise or <em>throws</em> an exception, the schedule is paused (<code>refreshPaused</code>
+ is set to <code>true</code>).</p>
+<p> The expression will receive a <code>cancellationToken</code>
+ argument that references a <a href="https://docs.angularjs.org/api/ng/service/$q">$q promise</a></p>
+<ul>
+<li><code>cancellationToken</code> should be supplied to any call to
+<a href="https://docs.angularjs.org/api/ng/service/$http">$http</a> as the <code>timeout</code> property of the <code>config</code>
+parameter</li>
+<li>the <code>cancellationToken</code> promise will be resolved, thus cancelling any in-flight <code>$http</code> request, whenever the
+<a href="https://docs.angularjs.org/api/ng/type/$rootScope.Scope">$scope</a> for the current view is about to
+be <code>$destroy</code>&#39;ed. The most likely reason for this occurring is when the user switches to another view</li>
+<li><code>cancellationToken</code> can be safely ignored if the <code>refreshFn</code> is not asynchronous</li>
+</ul>
+</div></td></tr><tr><td>refreshPaused <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshfn-directive-page cc-autorefresh-ccautorefreshfn-directive-ccautorefreshfn-page"><p><strong>Assignable</strong> angular expression which determines whether the schedule is paused.</p>
+<ul>
+<li>If the expression is truthy the schedule is paused</li>
+<li>If this directive determines that the schedule should be paused, it will assign the expression to a value of <code>true</code></li>
+</ul>
+</div></td></tr><tr><td>refreshInterval</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshfn-directive-page cc-autorefresh-ccautorefreshfn-directive-ccautorefreshfn-page"><p>Angular expression that determines the interval (milliseconds) that <code>refreshFn</code> will be executed.</p>
+</div></td></tr><tr><td>refreshModel</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshfn-directive-page cc-autorefresh-ccautorefreshfn-directive-ccautorefreshfn-page"><p><strong>Assignable</strong> angular expression to data-bind the value returned by <code>refreshFn</code>.</p>
+</div></td></tr><tr><td>refreshBusy <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshfn-directive-page cc-autorefresh-ccautorefreshfn-directive-ccautorefreshfn-page"><p><strong>Assignable</strong> angular expression that this directive will set whenever <code>refreshFn</code> is in progress</p>
+</div></td></tr><tr><td>refreshOnRefreshed <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="cc-autorefresh-ccautorefreshfn-directive-page cc-autorefresh-ccautorefreshfn-directive-ccautorefreshfn-page"><p>An expression that is called on the successful completion of <code>refreshFn</code>. The expression will receive an <code>eventArgs</code></p>
+<ul>
+<li><code>eventArgs.when</code> the date when the refresh completed</li>
+<li><code>eventArgs.model</code> the value returned by <code>refreshFn</code></li>
+</ul>
+</div></td></tr></tbody></table></div>
+</div>
