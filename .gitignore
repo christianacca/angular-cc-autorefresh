@@ -14,6 +14,7 @@ lib-cov
 pids
 logs
 results
+build
 dist
 # test coverage files
 coverage/
