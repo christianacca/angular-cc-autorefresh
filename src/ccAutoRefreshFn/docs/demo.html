@@ -1,0 +1,28 @@
+<div ng-controller="AutoRefreshFnDemoCtrl as vm">
+
+    <p> Refreshed list as at <em>{{vm.lastRefresh | date:'medium'}}</em>
+        <i style="color: #d3d3d3" class="glyphicon glyphicon-refresh" ng-show="vm.refreshBusy"></i>
+    </p>
+    <pre>{{ vm.list | json}}</pre>
+
+    <cc-auto-refresh-fn
+            refresh-fn="vm.refreshList()"
+            refresh-interval="vm.refreshOpts.interval"
+            refresh-model="vm.list"
+            refresh-paused="vm.refreshOpts.paused"
+            refresh-busy="vm.refreshBusy"
+            refresh-on-refreshed="vm.setLastRefreshed(eventArgs)">
+    </cc-auto-refresh-fn>
+
+    <div class="form-group">
+        <label class="control-label" for="inputInterval">Interval:</label>
+        <input type="number" class="form-control input-sm" id="inputInterval" placeholder="Seconds"
+               ng-model="vm.refreshOpts.interval">
+        <p class="help-block">Interval in milliseconds</p>
+    </div>
+    <div class="form-group">
+        <label class="checkbox" ng-disabled="vm.refreshBusy">
+            <input type="checkbox" ng-model="vm.refreshOpts.paused" ng-disabled="vm.refreshBusy"> Paused?
+        </label>
+    </div>
+</div>

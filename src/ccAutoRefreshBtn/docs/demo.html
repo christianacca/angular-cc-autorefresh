@@ -1,0 +1,71 @@
+<div ng-controller="AutoRefreshBtnDemoCtrl as vm">
+
+    <div class="page-header">
+        <h1>
+
+            {{vm.lists[0].title}}
+
+            <cc-auto-refresh-btn
+                    class="btn-group-sm"
+                    cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
+                    refresh-interval="vm.lists[0].interval"
+                    refresh-model="vm.lists[0].data"
+                    refresh-on-refreshed="vm.lists[0].setLastRefreshed(eventArgs)">
+                {{vm.lists[0].lastRefresh | date:'HH:mm:ss'}}
+            </cc-auto-refresh-btn>
+
+        </h1>
+    </div>
+
+    <pre>{{ vm.lists[0].data | json}}</pre>
+
+    <div class="page-header">
+        <h1>
+
+            {{vm.lists[1].title}}
+            <small> As at: {{ vm.lists[1].lastRefresh | date:'yyyy-MM-dd HH:mm:ss'}}</small>
+
+            <cc-auto-refresh-btn
+                    class="btn-group-sm"
+                    cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
+                    refresh-interval="vm.lists[1].interval"
+                    refresh-paused="vm.lists[1].paused"
+                    refresh-model="vm.lists[1].data"
+                    refresh-busy="vm.lists[1].refreshBusy"
+                    refresh-on-refreshed="vm.lists[1].setLastRefreshed(eventArgs)"
+                    ng-disabled="vm.lists[1].listDisabled"
+                    ng-hide="vm.lists[1].hideButton">
+            </cc-auto-refresh-btn>
+
+        </h1>
+    </div>
+
+    <pre ng-disabled="vm.lists[1].listDisabled">{{ vm.lists[1].data | json}}</pre>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="checkbox" ng-disabled="vm.lists[1].refreshBusy">
+                    <input type="checkbox" ng-model="vm.lists[1].listDisabled" ng-disabled="vm.lists[1].refreshBusy">
+                    Disable list?
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="vm.lists[1].hideButton"> Hide button?
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="checkbox" ng-disabled="vm.lists[1].refreshBusy">
+                    <input type="checkbox" ng-model="vm.lists[1].paused" ng-disabled="vm.lists[1].refreshBusy">
+                    Paused?
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>
