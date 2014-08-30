@@ -12,6 +12,10 @@
     "url": "http://codingmonster.co.uk"
   },
   "homepage": "http://christianacca.github.io/angular-cc-autorefresh",
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/christianacca/angular-cc-autorefresh.git"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
