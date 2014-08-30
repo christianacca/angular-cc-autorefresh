@@ -16,7 +16,7 @@ angular.module('plunker', [])
           '<html ng-app="cc.autorefresh.demo">\n' +
           '  <head>\n' +
           '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular.js"></script>\n' +
-          '    <script src="//angular-ui.github.io/bootstrap/angular-cc-autorefresh-tpls-'+version+'.js"></script>\n' +
+          '    <script src="//christianacca.github.io/angular-cc-autorefresh/angular-cc-autorefresh-tpls-'+version+'.js"></script>\n' +
           '    <script src="example.js"></script>\n' +
           '    <link href="//netdna.bootstrapcdn.com/bootstrap/'+bsVersion+'/css/bootstrap.min.css" rel="stylesheet">\n' +
           '  </head>\n' +
@@ -30,7 +30,7 @@ angular.module('plunker', [])
         return "angular.module('cc.autorefresh.demo', ['cc.autorefresh']);" + "\n" + content;
       };
 
-      addField('description', 'http://angular-ui.github.io/bootstrap/');
+      addField('description', 'http://christianacca.github.io/angular-cc-autorefresh/');
       addField('files[index.html]', indexContent(content.markup, version));
       addField('files[example.js]', scriptContent(content.javascript));
 
