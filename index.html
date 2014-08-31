@@ -7,19 +7,20 @@
     <title>Angular auto refresh directives | Coding Monster</title>
     <meta name="description" content="AngularJS (Angular) directives for scheduling a routine to refresh $scope. No 3rd party JS dependencies (jQuery, bootstrap JS) required">
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-touch.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-mocks.js"></script>
-    <script src="//cdn.jsdelivr.net/angular.bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="cc-autorefresh-tpls-0.1.3.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-touch.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-mocks.js"></script>
+    <script src="http://cdn.jsdelivr.net/angular.bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="cc-autorefresh-tpls-0.1.4.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
+    <script src="assets/demoBootstrap.js"></script>
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
-    <link rel="author" href="http://codingmonster.co.uk">
+    <link rel="author" href="">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
 </head>
 <body class="ng-cloak" ng-controller="MainCtrl">
@@ -74,14 +75,22 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/christianacca/angular-cc-autorefresh"><i class="icon-github"></i>Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.1.3)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.1.4)</small>
                 </button>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
             </p>
 -->
         </div>
-        <div class="bs-social container" style="display: none">
+        <div class="bs-social container">
             <ul class="bs-social-buttons">
+                <li>
+                    <iframe src="//ghbtns.com/github-btn.html?user=christianacca&repo=angular-cc-autorefresh&type=watch&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+                </li>
+                <li>
+                    <iframe src="//ghbtns.com/github-btn.html?user=christianacca&repo=angular-cc-autorefresh&type=fork&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+                </li>
                 <li>
                     <a href="https://twitter.com/share" class="twitter-share-button"
                        data-hashtags="angularjs">Tweet</a>
@@ -151,12 +160,12 @@
                     </ul>
                     <h4>2. Reference <strong>angular-cc-autorefresh</strong></h4>
                     <ul>
-                        <li>Download <code>cc-autorefresh-tpls-0.1.3.min.js</code> script
-                            (<a href="https://github.com/christianacca/angular-cc-autorefresh/tree/gh-pages/cc-autorefresh-tpls-0.1.3.min.js">Direct link</a>)
+                        <li>Download <code>cc-autorefresh-tpls-0.1.4.min.js</code> script
+                            (<a href="https://raw.githubusercontent.com/christianacca/angular-cc-autorefresh/gh-pages/cc-autorefresh-tpls-0.1.4.min.js">Direct link</a>)
                         </li>
                         <li>Add the reference (remember to replace <em>your/path</em>) :
                             <ul>
-                                <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.1.3.min.js&quot;&gt;&lt;/script&gt;</code>
+                                <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.1.4.min.js&quot;&gt;&lt;/script&gt;</code>
                                 </li>
                             </ul>
                         </li>
@@ -284,7 +293,7 @@ translations can be provided either:</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.3', 'ccAutoRefreshBtn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.4', 'ccAutoRefreshBtn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -419,6 +428,46 @@ translations can be provided either:</p>
         });
     });</code></pre>
                                         </div>
+                                        <h4>Demo Bootstrap</h4>
+                                        <div plunker-content="bootstrapjs">
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;cc.autorefresh.demo&#x27;)
+    .factory(&#x27;delayHTTP&#x27;, function ($q, $timeout) {
+        // interceptor that will fake delays to backend
+        return {
+            request: function (request) {
+                var delayedResponse = $q.defer();
+                $timeout(function () {
+                    delayedResponse.resolve(request);
+                }, 1000);
+                return delayedResponse.promise;
+            },
+            response: function (response) {
+                var deferResponse = $q.defer();
+
+                if (response.config.timeout &amp;&amp; response.config.timeout.then) {
+                    response.config.timeout.then(function () {
+                        deferResponse.reject({ status: 0});
+                    });
+                } else {
+                    deferResponse.resolve(response);
+                }
+
+                return $timeout(function () {
+                    deferResponse.resolve(response);
+                    return deferResponse.promise;
+                });
+            }
+        };
+    })
+    .config([&#x27;$httpProvider&#x27;, function ($httpProvider) {
+        $httpProvider.interceptors.push(&#x27;delayHTTP&#x27;);
+    }])
+    .run(function($httpBackend) {
+
+        // whitelist backend calls
+        $httpBackend.whenGET(/^\/templates\//).passThrough();
+    });</code></pre>
+                                        </div>
                                     </tab>
                                 </tabset>
                             </div>
@@ -541,7 +590,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.3', 'ccAutoRefreshFn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.4', 'ccAutoRefreshFn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -609,6 +658,46 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     initialise();
 });</code></pre>
                                         </div>
+                                        <h4>Demo Bootstrap</h4>
+                                        <div plunker-content="bootstrapjs">
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;cc.autorefresh.demo&#x27;)
+    .factory(&#x27;delayHTTP&#x27;, function ($q, $timeout) {
+        // interceptor that will fake delays to backend
+        return {
+            request: function (request) {
+                var delayedResponse = $q.defer();
+                $timeout(function () {
+                    delayedResponse.resolve(request);
+                }, 1000);
+                return delayedResponse.promise;
+            },
+            response: function (response) {
+                var deferResponse = $q.defer();
+
+                if (response.config.timeout &amp;&amp; response.config.timeout.then) {
+                    response.config.timeout.then(function () {
+                        deferResponse.reject({ status: 0});
+                    });
+                } else {
+                    deferResponse.resolve(response);
+                }
+
+                return $timeout(function () {
+                    deferResponse.resolve(response);
+                    return deferResponse.promise;
+                });
+            }
+        };
+    })
+    .config([&#x27;$httpProvider&#x27;, function ($httpProvider) {
+        $httpProvider.interceptors.push(&#x27;delayHTTP&#x27;);
+    }])
+    .run(function($httpBackend) {
+
+        // whitelist backend calls
+        $httpBackend.whenGET(/^\/templates\//).passThrough();
+    });</code></pre>
+                                        </div>
                                     </tab>
                                 </tabset>
                             </div>
@@ -651,7 +740,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
 </div><!-- /.main -->
 <footer class="footer">
     <div class="container">
-        <p>Created by <a href="http://codingmonster.co.uk">Christian Crowhurst</a>; Document and build process "borrowed" from <a href="https://github.com/angular-ui" target="_blank">Angular-UI</a>.</p>
+        <p>Created by <a href=""></a>; Document and build process "borrowed" from <a href="https://github.com/angular-ui" target="_blank">Angular-UI</a>.</p>
         <p>Code licensed under <a href="https://github.com/christianacca/angular-cc-autorefresh/blob/master/LICENSE">MIT License</a>.</p>
         <p><a href="https://github.com/christianacca/angular-cc-autorefresh/issues?state=open">Issues</a></p>
     </div>
@@ -696,7 +785,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('0.1.3')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.1.3</a>
+        <a class="btn btn-primary" ng-href="{{download('0.1.4')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.1.4</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
@@ -746,18 +835,14 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
         </a>
     </div>
 </script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-<script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37467169-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+    ga('create', 'UA-32817786-1', 'auto');
+    ga('send', 'pageview');
 
 </script>
 <script src="assets/smoothscroll-angular-custom.js"></script>

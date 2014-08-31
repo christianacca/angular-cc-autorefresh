@@ -75,6 +75,6 @@ NG_DOCS={
   "startPage": "/api/cc.autorefresh",
   "scripts": [
     "angular.min.js",
-    "cc-autorefresh-tpls-0.1.3.js"
+    "cc-autorefresh-tpls-0.1.4.js"
   ]
 };
