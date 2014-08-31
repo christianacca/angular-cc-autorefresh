@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     git: {
       account: 'christianacca',
       url: 'https://github.com/<%=git.account%>/<%=pkg.name%>',
-      pagesurl: 'http://<%=git.account%>.github.io/<%=pkg.name%>',
+      pagesurl: 'http://projects.codingmonster.co.uk/<%=pkg.name%>',
       rawurl: 'https://raw.githubusercontent.com/<%=git.account%>/<%=pkg.name%>/gh-pages'
     },
     dist: 'dist',

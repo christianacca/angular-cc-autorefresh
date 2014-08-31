@@ -5,9 +5,9 @@ angular-cc-autorefresh
 
 ## Demo and docs
 
-To see directives in action visit the [demo](http://christianacca.github.io/angular-cc-autorefresh).
+To see directives in action visit the [demo](http://projects.codingmonster.co.uk/angular-cc-autorefresh/).
 
-Alternatively, browse the [API reference](http://christianacca.github.io/angular-cc-autorefresh/ref-docs)
+Alternatively, browse the [API reference](http://projects.codingmonster.co.uk/angular-cc-autorefresh//ref-docs)
 
 ## Installation
 
