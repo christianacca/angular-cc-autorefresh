@@ -6,11 +6,7 @@
     "schedule"
   ],
   "version": "0.1.3",
-  "author": {
-    "name": "Christian Crowhurst",
-    "email": "ghp@christianacca.e4ward.com",
-    "url": "http://codingmonster.co.uk"
-  },
+  "author": "Christian Crowhurst <ghp@christianacca.e4ward.com> (http://codingmonster.co.uk)",
   "homepage": "http://christianacca.github.io/angular-cc-autorefresh",
   "repository" : { 
     "type" : "git", 

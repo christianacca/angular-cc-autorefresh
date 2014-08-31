@@ -7,11 +7,11 @@
     <title>Angular auto refresh directives | Coding Monster</title>
     <meta name="description" content="AngularJS (Angular) directives for scheduling a routine to refresh $scope. No 3rd party JS dependencies (jQuery, bootstrap JS) required">
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular-touch.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular-mocks.js"></script>
-    <script src="//cdn.jsdelivr.net/angular.bootstrap/<%= uibsversion %>/ui-bootstrap-tpls.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular-touch.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular-mocks.js"></script>
+    <script src="http://cdn.jsdelivr.net/angular.bootstrap/<%= uibsversion %>/ui-bootstrap-tpls.min.js"></script>
     <script src="cc-autorefresh-tpls-<%= pkg.version%>.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
@@ -73,7 +73,7 @@
 
 <!--
             <p>
-                <a class="btn btn-outline-inverse btn-lg" href="https://github.com/christianacca/angular-cc-autorefresh"><i class="icon-github"></i>Code on Github</a>
+                <a class="btn btn-outline-inverse btn-lg" href="<%=git.url%>"><i class="icon-github"></i>Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
                     <i class="glyphicon glyphicon-download-alt"></i> Download <small>(<%= pkg.version%>)</small>
                 </button>
@@ -151,7 +151,7 @@
                     <h4>2. Reference <strong>angular-cc-autorefresh</strong></h4>
                     <ul>
                         <li>Download <code>cc-autorefresh-tpls-<%=pkg.version%>.min.js</code> script
-                            (<a href="https://raw.githubusercontent.com/christianacca/<%=pkg.name%>/gh-pages/<%=filename%>-tpls-<%=pkg.version%>.min.js">Direct link</a>)
+                            (<a href="<%=git.rawurl%>/<%=filename%>-tpls-<%=pkg.version%>.min.js">Direct link</a>)
                         </li>
                         <li>Add the reference (remember to replace <em>your/path</em>) :
                             <ul>
@@ -173,7 +173,7 @@
                     <section id="<%= module.name %>">
                         <div class="page-header">
                           <h1><%= module.displayName %><small>
-                              (<a target="_blank" href="https://github.com/christianacca/angular-cc-autorefresh/tree/master/src/<%= module.name %>"><%=meta.ns%>.<%= module.name %></a>)
+                              (<a target="_blank" href="<%=git.url%>/tree/master/src/<%= module.name %>"><%=meta.ns%>.<%= module.name %></a>)
                           </small></h1>
                           </div>
                           <div class="row">
@@ -218,8 +218,8 @@
 <footer class="footer">
     <div class="container">
         <p>Created by <a href="<%=pkg.author.url%>"><%=pkg.author.name%></a>; Document and build process "borrowed" from <a href="https://github.com/angular-ui" target="_blank">Angular-UI</a>.</p>
-        <p>Code licensed under <a href="https://github.com/christianacca/angular-cc-autorefresh/blob/master/LICENSE"><%= pkg.license %> License</a>.</p>
-        <p><a href="https://github.com/christianacca/angular-cc-autorefresh/issues?state=open">Issues</a></p>
+        <p>Code licensed under <a href="<%=git.url%>/blob/master/LICENSE"><%= pkg.license %> License</a>.</p>
+        <p><a href="<%=git.url%>/issues?state=open">Issues</a></p>
     </div>
 </footer>
 <script src="assets/rainbow.js"></script>

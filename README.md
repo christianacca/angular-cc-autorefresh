@@ -14,13 +14,13 @@ Alternatively, browse the [API reference](http://christianacca.github.io/angular
 ### 1. Reference dependencies
 
 - [AngularJS](http://angularjs.org/)
-	- eg: `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>` 
+	- eg: `<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>` 
 - [Bootstrap's **CSS**](http://getbootstrap.com/)
 	- eg: `<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>`
 
 ### 2. Reference **angular-cc-autorefresh**
 
-- Download the latest `cc-autorefresh-tpls-[version].min.js` script file from [here](<a href="https://github.com/christianacca/angular-cc-autorefresh/tree/gh-pages">)
+- Download the latest `cc-autorefresh-tpls-[version].min.js` script file from [here](https://github.com/christianacca/angular-cc-autorefresh/tree/gh-pages)
 - Add the reference (remember to replace *'your/path'* and *'[version]'*). eg:
     - `<script src="your/path/cc-autorefresh-tpls-[version].min.js"></script>`
 

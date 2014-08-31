@@ -24,6 +24,12 @@ module.exports = function(grunt) {
     uibsversion: '0.11.0',
     modules: [],//to be filled in by build task
     pkg: pkg,
+    git: {
+      account: 'christianacca',
+      url: 'https://github.com/<%=git.account%>/<%=pkg.name%>',
+      pagesurl: 'http://<%=git.account%>.github.io/<%=pkg.name%>',
+      rawurl: 'https://raw.githubusercontent.com/<%=git.account%>/<%=pkg.name%>/gh-pages'
+    },
     dist: 'dist',
     filename: pkg.name.replace('angular-', ''),
     filenamecustom: '<%= filename %>-custom',
@@ -159,7 +165,7 @@ module.exports = function(grunt) {
       options: {
         dest: 'CHANGELOG.md',
         templateFile: 'misc/changelog.tpl.md',
-        github: 'christianacca/<%=pkg.name%>'
+        github: '<%=git.account%>/<%=pkg.name%>'
       }
     },
     shell: {
@@ -197,7 +203,7 @@ module.exports = function(grunt) {
         title: '<%=meta.ns%>',
         html5Mode: false,
         startPage: '/api/<%=meta.ns%>',
-        imageLink: 'https://github.com/christianacca',
+        imageLink: '<%=git.pagesurl%>/',
         image: 'http://www.gravatar.com/avatar/c1fc9a95deec0da0a3dc0fac34bddfec.png'
       },
       api: {

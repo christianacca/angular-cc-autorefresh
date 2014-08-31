@@ -15,9 +15,9 @@ angular.module('plunker', [])
         return '<!doctype html>\n' +
           '<html ng-app="<%=meta.ns%>.demo">\n' +
           '  <head>\n' +
-          '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular.js"></script>\n' +
-          '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular-mocks.js"></script>\n' +
-          '    <script src="//christianacca.github.io/angular-cc-autorefresh/<%=filename%>-tpls-'+version+'.js"></script>\n' +
+          '    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular.js"></script>\n' +
+          '    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular-mocks.js"></script>\n' +
+          '    <script src="<%=git.pagesurl%>/<%=filename%>-tpls-'+version+'.js"></script>\n' +
           '    <script src="example.js"></script>\n' +
           '    <script src="exampleBootstrap.js"></script>\n' +
           '    <link href="//netdna.bootstrapcdn.com/bootstrap/'+bsVersion+'/css/bootstrap.min.css" rel="stylesheet">\n' +
@@ -32,7 +32,7 @@ angular.module('plunker', [])
         return "angular.module('<%=meta.ns%>.demo', ['<%=meta.ns%>', 'ngMockE2E']);" + "\n" + content;
       };
 
-      addField('description', 'http://christianacca.github.io/<%=pkg.name%>/');
+      addField('description', '<%=git.pagesurl%>/');
       addField('files[index.html]', indexContent(content.markup, version));
       addField('files[example.js]', exampleJs(content.javascript));
       addField('files[exampleBootstrap.js]', content.bootstrapjs);

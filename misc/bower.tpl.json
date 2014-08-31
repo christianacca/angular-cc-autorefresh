@@ -1,11 +1,11 @@
 {
   "name": "<%= pkg.name %>",
-  "version": "<%= pkg.verion %>",
+  "version": "<%= pkg.version %>",
   "authors": [
-    "christianacca <ghp@christianacca.e4ward.com>"
+    "<%=pkg.author%>"
   ],
   "description": "<%= pkg.description %>",
-  "main": "cc.autorefresh",
+  "main": "<%=filename%>-tpls-<%=pkg.version%>.min.js",
   "license": "<%= pkg.license %>",
   "homepage": "<%= pkg.homepage %>",
   "private": false,
