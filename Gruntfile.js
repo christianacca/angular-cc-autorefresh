@@ -266,7 +266,7 @@ module.exports = function(grunt) {
     }
 
     var docCtx = getDocDataContext(name);
-        var module = {
+    var module = {
       name: name,
       moduleName: enquote(grunt.config('meta.ns') + '.' + name),
       displayName: ucwords(breakup(name, ' ')),
@@ -339,7 +339,8 @@ module.exports = function(grunt) {
     var modules = grunt.config('modules');
     grunt.config('srcModules', _.pluck(modules, 'moduleName'));
     grunt.config('tplModules', _.pluck(modules, 'tplModules').filter(function(tpls) { return tpls.length > 0;} ));
-    grunt.config('demoModules', modules
+
+    var demoModules =  modules
       .filter(function(module) {
         return module.docs.md && module.docs.js && module.docs.html;
       })
@@ -347,8 +348,9 @@ module.exports = function(grunt) {
         if (a.name < b.name) { return -1; }
         if (a.name > b.name) { return 1; }
         return 0;
-      })
-    );
+      });
+    demoModules.bootstrapjs = grunt.template.process(grunt.file.read('misc/demo/assets/demoBootstrap.js'));
+    grunt.config('demoModules', demoModules);
 
     var srcFiles = _.pluck(modules, 'srcFiles');
     var tpljsFiles = _.pluck(modules, 'tpljsFiles');

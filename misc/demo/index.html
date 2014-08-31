@@ -15,6 +15,7 @@
     <script src="cc-autorefresh-tpls-<%= pkg.version%>.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
+    <script src="assets/demoBootstrap.js"></script>
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
@@ -150,7 +151,7 @@
                     <h4>2. Reference <strong>angular-cc-autorefresh</strong></h4>
                     <ul>
                         <li>Download <code>cc-autorefresh-tpls-<%=pkg.version%>.min.js</code> script
-                            (<a href="https://github.com/christianacca/angular-cc-autorefresh/tree/gh-pages/cc-autorefresh-tpls-<%=pkg.version%>.min.js">Direct link</a>)
+                            (<a href="https://raw.githubusercontent.com/christianacca/<%=pkg.name%>/gh-pages/<%=filename%>-tpls-<%=pkg.version%>.min.js">Direct link</a>)
                         </li>
                         <li>Add the reference (remember to replace <em>your/path</em>) :
                             <ul>
@@ -198,6 +199,10 @@
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
                                             <pre ng-non-bindable><code data-language="javascript"><%- module.docs.js %></code></pre>
+                                        </div>
+                                        <h4>Demo Bootstrap</h4>
+                                        <div plunker-content="bootstrapjs">
+                                            <pre ng-non-bindable><code data-language="javascript"><%- demoModules.bootstrapjs %></code></pre>
                                         </div>
                                     </tab>
                                 </tabset>
