@@ -42,7 +42,7 @@ body {
 
 }
 
-.nav, .pagination, .carousel, .panel-title a {
+.nav, .pagination, .carousel, .panel-title a, a:not([href]) {
     cursor: pointer;
 }
 
@@ -124,7 +124,7 @@ border-bottom-color: transparent;
 .btn-outline-inverse {
 color: #fff;
 background-color: transparent;
-border-color: #cdbfe3;
+border-color: #fff;
 margin: 10px;
 }
 
@@ -140,7 +140,7 @@ margin: 10px;
 }
 
 .btn-outline-inverse:hover, .btn-outline-inverse:focus, .btn-outline-inverse:active {
-color: #563d7c;
+color: #302f2f;
 text-shadow: none;
 background-color: #fff;
 border-color: #fff;
@@ -154,6 +154,7 @@ border-color: #fff;
   text-align: center;
   text-shadow: 0 1px 0 rgba(0,0,0,.15);
   color: #e5e0e0;
+  background-color: #302f2f;
   background-image: url(header.png);
 }
 .bs-header a {
