@@ -2,6 +2,7 @@
   "name": "angular-cc-autorefresh",
   "description": "Auto refresh angular directives",
   "keywords": [
+    "angular",
     "refresh",
     "schedule"
   ],
