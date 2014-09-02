@@ -454,6 +454,11 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('release', 'Packages distributable files suitable for a release', function(){
+
+        function stripVs(dest, src) {
+            return dest + '/' + src.replace('-' + grunt.config('pkg.version'), '');
+        }
+
         grunt.config('copy.release_lib', {
             options: {
                 //process files with gruntfile config
@@ -464,17 +469,20 @@ module.exports = function(grunt) {
                 expand: true,
                 src: ['*.js'],
                 cwd: '<%= dist %>',
-                dest: '<%=copy.release_lib.options.rootdir%>js'
+                dest: '<%=copy.release_lib.options.rootdir%>js',
+                rename: stripVs
             }, {
                 expand: true,
                 src: ['*.css'],
                 cwd: '<%= dist %>',
-                dest: '<%=copy.release_lib.options.rootdir%>css'
+                dest: '<%=copy.release_lib.options.rootdir%>css',
+                rename: stripVs
             }, {
                 expand: true,
                 src: ['*.jpg', '*.jpeg', '*.png', '*.ico', '*.gif'],
                 cwd: '<%= dist %>',
-                dest: '<%=copy.release_lib.options.rootdir%>image'
+                dest: '<%=copy.release_lib.options.rootdir%>image',
+                rename: stripVs
             }, {
                 src: 'misc/bower.tpl.json',
                 dest: '<%=copy.release_lib.options.rootdir%>bower.json'
