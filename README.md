@@ -20,7 +20,9 @@ Alternatively, browse the [API reference](http://projects.codingmonster.co.uk/an
 
 ### 2. Reference **angular-cc-autorefresh**
 
-- Download the latest `cc-autorefresh-tpls-[version].min.js` script file from [here](https://github.com/christianacca/angular-cc-autorefresh/tree/gh-pages)
+- Either:
+	- Download the latest `cc-autorefresh-tpls-[version].min.js` script file from [here](https://github.com/christianacca/angular-cc-autorefresh/tree/gh-pages); **OR**
+	- Install with bower. eg: `bower install angular-cc-autorefresh`
 - Add the reference (remember to replace *'your/path'* and *'[version]'*). eg:
     - `<script src="your/path/cc-autorefresh-tpls-[version].min.js"></script>`
 
