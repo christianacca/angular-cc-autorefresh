@@ -5,7 +5,7 @@
     "<%=pkg.author%>"
   ],
   "description": "<%= pkg.description %>",
-  "main": "<%=filename%>-tpls-<%=pkg.version%>.min.js",
+  "main": ["js/<%=filename%>-tpls-<%=pkg.version%>.min.js"],
   "keywords": [<%= (pkg.keywords.map(function(w) { return '"' + w + '"'; })).join(",") %>],
   "license": "<%= pkg.license %>",
   "homepage": "<%= pkg.homepage %>",
