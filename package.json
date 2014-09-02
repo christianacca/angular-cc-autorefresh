@@ -3,6 +3,7 @@
   "description": "Auto refresh angular directives",
   "keywords": [
     "angular",
+    "directive",
     "refresh",
     "schedule"
   ],
