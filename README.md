@@ -1,6 +1,9 @@
 angular-cc-autorefresh
 ======================
 
+[![Build Status](https://travis-ci.org/christianacca/angular-cc-autorefresh.svg?branch=master)](https://travis-ci.org/christianacca/angular-cc-autorefresh)
+[![devDependency Status](https://david-dm.org/christianacca/angular-cc-autorefresh/dev-status.svg?branch=master)](https://david-dm.org/christianacca/angular-cc-autorefresh#info=devDependencies)
+
 [AngularJS](http://angularjs.org/) directives to schedule work that refreshes $scope.
 
 ## Demo and docs
