@@ -71,15 +71,13 @@
 
             <p>Directives to schedule work that refreshes $scope...</p>
 
-<!--
             <p>
-                <a class="btn btn-outline-inverse btn-lg" href="https://github.com/christianacca/angular-cc-autorefresh"><i class="icon-github"></i>Code on Github</a>
+                <a class="btn btn-outline-inverse btn-lg" href="https://github.com/christianacca/angular-cc-autorefresh"><i class="glyphicon glyphicon-new-window"></i> Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
                     <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.1.4)</small>
                 </button>
-                <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
+                <!--<button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>-->
             </p>
--->
         </div>
         <div class="bs-social container">
             <ul class="bs-social-buttons">
@@ -146,24 +144,25 @@
 
                     <h4>1. Reference dependencies</h4>
                     <ul>
-                        <li><a href="http://angularjs.org/">AngularJS</a>. eg:
+                        <li><a href="http://angularjs.org/">AngularJS <i class="glyphicon glyphicon-new-window"><i></i></i></a>
                             <ul>
-                                <li><code>&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js&quot;&gt;&lt;/script&gt;</code></li>
+                                <li>Requires AngularJS 1.2.x, tested with 1.2.23</li>
+                                <li>eg: <code>&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js&quot;&gt;&lt;/script&gt;</code></li>
                             </ul>
                         </li>
-                        <li><a href="http://getbootstrap.com/">Bootstrap’s <strong>CSS</strong></a>. eg:
+                        <li><a href="http://getbootstrap.com/">Bootstrap’s <strong>CSS</strong> <i class="glyphicon glyphicon-new-window"><i></i></i></a>
                             <ul>
-                                <li><code>&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css&quot;
+                                <li>Tested with version 3.1.1</li>
+                                <li>eg: <code>&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css&quot;
                                     rel=&quot;stylesheet&quot;/&gt;</code></li>
                             </ul>
                         </li>
                     </ul>
                     <h4>2. Reference <strong>angular-cc-autorefresh</strong></h4>
                     <ul>
-                        <li>Download <code>cc-autorefresh-tpls-0.1.4.min.js</code> script
-                            (<a href="https://raw.githubusercontent.com/christianacca/angular-cc-autorefresh/gh-pages/cc-autorefresh-tpls-0.1.4.min.js">Direct link</a>)
+                        <li><a ng-click="showDownloadModal()">Download</a> <code>cc-autorefresh</code> js
                         </li>
-                        <li>Add the reference (remember to replace <em>your/path</em>) :
+                        <li>Add the reference (remember to replace <em>'your/path'</em>). eg:
                             <ul>
                                 <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.1.4.min.js&quot;&gt;&lt;/script&gt;</code>
                                 </li>
@@ -173,7 +172,7 @@
                     <h4>3. Add dependencies on the <code>cc.autorefresh</code> AngularJS module</h4>
                     <ul>
                         <li>
-                            <code class="javascript">angular.module(&#39;myModule&#39;, [&#39;cc-autorefresh&#39;]);
+                            <code class="javascript">angular.module(&#39;myModule&#39;, [&#39;cc.autorefresh&#39;]);
                             </code>
                         </li>
                     </ul>

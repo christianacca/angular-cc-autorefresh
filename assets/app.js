@@ -75,7 +75,7 @@ var DownloadCtrl = function($scope, $modalInstance) {
   $scope.download = function (version) {
     var options = $scope.options;
 
-    var downloadUrl = ['ui-bootstrap-'];
+    var downloadUrl = ['cc-autorefresh-'];
     if (options.tpls) {
       downloadUrl.push('tpls-');
     }
