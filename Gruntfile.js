@@ -457,26 +457,27 @@ module.exports = function(grunt) {
         grunt.config('copy.release_lib', {
             options: {
                 //process files with gruntfile config
-                process: grunt.template.process
+                process: grunt.template.process,
+                rootdir: 'dist/packaged/lib/'
             },
             files: [{
                 expand: true,
                 src: ['*.js'],
                 cwd: '<%= dist %>',
-                dest: 'dist/packaged/lib/js'
+                dest: '<%=copy.release_lib.options.rootdir%>js'
             }, {
                 expand: true,
                 src: ['*.css'],
                 cwd: '<%= dist %>',
-                dest: 'dist/packaged/lib/css'
+                dest: '<%=copy.release_lib.options.rootdir%>css'
             }, {
                 expand: true,
                 src: ['*.jpg', '*.jpeg', '*.png', '*.ico', '*.gif'],
                 cwd: '<%= dist %>',
-                dest: 'dist/packaged/lib/image'
+                dest: '<%=copy.release_lib.options.rootdir%>image'
             }, {
                 src: 'misc/bower.tpl.json',
-                dest: 'dist/packaged/lib/bower.json'
+                dest: '<%=copy.release_lib.options.rootdir%>bower.json'
             }]
         });
 
