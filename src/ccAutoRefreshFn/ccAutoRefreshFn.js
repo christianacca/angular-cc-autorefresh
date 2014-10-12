@@ -11,21 +11,19 @@ angular.module("cc.autorefresh.ccAutoRefreshFn", [])
     .factory("_ccAutoRefreshUtils", ["$injector", function ($injector) {
         "use strict";
 
+        var exPoliciesLite = {
+            promiseFinExPolicy: $injector.get("$exceptionHandler"),
+            httpFailureFormatter: function (rejection) {
+                if (rejection instanceof Error) {
+                    return rejection;
+                }
+                return { isHttpCancel: rejection && rejection.status === 0 };
+            }
+        };
+
         function resolveExPoliciesSvc() {
-            // integrate with ccExceptionPoliciesModule if installed
-            // otherwise return a sufficient "lite" service
-            if ($injector.has("ccExceptionPolicies")) {
-                return $injector.get("ccExceptionPolicies");
-            }
-            else {
-                return {
-                    promiseFinExPolicy: $injector.get("$exceptionHandler"),
-                    httpFailureFormatter: function (rejection) {
-                        if (rejection instanceof Error) { return rejection; }
-                        return { isHttpCancel: rejection && rejection.status === 0 };
-                    }
-                };
-            }
+            // integrate with ccExceptionPoliciesModule if installed otherwise return a "lite" service
+            return $injector.has("ccExceptionPolicies") ? $injector.get("ccExceptionPolicies") : exPoliciesLite;
         }
 
         return {
