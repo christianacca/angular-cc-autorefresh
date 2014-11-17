@@ -28,16 +28,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "cc.autorefresh.ccAutoRefreshBtn",
       "shortDescription": "Schedule a expression to run every n number of milliseconds and assign the return value to the scope.",
-      "keywords": "accepts angular api assign autorefresh button cancel cc ccautorefreshbtn ccautorefreshfn data-bind default demand details determines directive executed execution expression extends interval milliseconds number overrides parameters pause progress refresh refreshfn refreshinterval refreshmodel refreshtranslations return returned returns schedule scope translations user"
-    },
-    {
-      "section": "api",
-      "id": "cc.autorefresh.ccAutoRefreshBtn.type:ccAutoRefreshDefaultTranslations",
-      "shortName": "ccAutoRefreshDefaultTranslations",
-      "type": "object",
-      "moduleName": "cc.autorefresh.ccAutoRefreshBtn",
-      "shortDescription": "Default translations for the ccAutoRefreshBtn",
-      "keywords": "api autorefresh cc ccautorefreshbtn default directive object translations type"
+      "keywords": "accepts angular api assign autorefresh button cancel cc ccautorefreshbtn ccautorefreshfn data-bind demand details determines directive executed execution expression extends interval milliseconds number parameters pause progress refresh refreshfn refreshinterval refreshmodel return returned schedule scope user"
     },
     {
       "section": "api",
@@ -75,6 +66,6 @@ NG_DOCS={
   "startPage": "/api/cc.autorefresh",
   "scripts": [
     "angular.min.js",
-    "cc-autorefresh-tpls-0.1.4.js"
+    "cc-autorefresh-tpls-0.2.0.js"
   ]
 };

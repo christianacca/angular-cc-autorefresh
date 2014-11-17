@@ -12,7 +12,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-touch.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-mocks.js"></script>
     <script src="http://cdn.jsdelivr.net/angular.bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="cc-autorefresh-tpls-0.1.4.js"></script>
+    <script src="cc-autorefresh-tpls-0.2.0.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
     <script src="assets/demoBootstrap.js"></script>
@@ -74,7 +74,7 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/christianacca/angular-cc-autorefresh"><i class="glyphicon glyphicon-new-window"></i> Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.1.4)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.2.0)</small>
                 </button>
                 <!--<button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>-->
             </p>
@@ -164,7 +164,7 @@
                         </li>
                         <li>Add the reference (remember to replace <em>'your/path'</em>). eg:
                             <ul>
-                                <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.1.4.min.js&quot;&gt;&lt;/script&gt;</code>
+                                <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.2.0.min.js&quot;&gt;&lt;/script&gt;</code>
                                 </li>
                             </ul>
                         </li>
@@ -273,16 +273,6 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
 <li><code>ng-hide</code> attribute to show/hide the button</li>
 </ul>
 
-<h3>Overriding translations</h3>
-
-<p>The service <code>ccAutoRefreshDefaultTranslations</code> provides the directive with translations for tooltips, etc. Custom
-translations can be provided either:</p>
-
-<ul>
-<li>supplying an expression to <code>refresh-translations</code> attribute</li>
-<li>globally by defining your own service named <code>ccAutoRefreshDefaultTranslations</code>  </li>
-</ul>
-
 <h3>API documentation</h3>
 
 <p>See <a href="ref-docs/#/api/cc.autorefresh.ccAutoRefreshBtn.directive:ccAutoRefreshBtn">API reference</a></p>
@@ -292,7 +282,7 @@ translations can be provided either:</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.4', 'ccAutoRefreshBtn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.2.0', 'ccAutoRefreshBtn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -589,7 +579,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.1.4', 'ccAutoRefreshFn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.2.0', 'ccAutoRefreshFn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -784,7 +774,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('0.1.4')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.1.4</a>
+        <a class="btn btn-primary" ng-href="{{download('0.2.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.2.0</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
