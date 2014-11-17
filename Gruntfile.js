@@ -36,7 +36,6 @@ module.exports = function(grunt) {
       pagesurl: 'http://projects.codingmonster.co.uk/<%=pkg.name%>',
       rawurl: 'https://raw.githubusercontent.com/<%=git.account%>/<%=pkg.name%>/gh-pages'
     },
-    dist: 'dist',
     filename: pkg.name.replace('angular-', ''),
     filenamecustom: '<%= filename %>-custom',
     ngdocrelpath: 'ref-docs',
@@ -69,19 +68,19 @@ module.exports = function(grunt) {
       }
     },
     concat: {
-      dist: {
+      build: {
         options: {
           banner: '<%= meta.banner %><%= meta.modules %>\n'
         },
         src: [], //src filled in by build task
-        dest: '<%= dist %>/<%= filename %>-<%= pkg.version %>.js'
+        dest: 'build/<%= filename %>-<%= pkg.version %>.js'
       },
-      dist_tpls: {
+      build_tpls: {
         options: {
           banner: '<%= meta.banner %><%= meta.all %>\n<%= meta.tplmodules %>\n'
         },
         src: [], //src filled in by build task
-        dest: '<%= dist %>/<%= filename %>-tpls-<%= pkg.version %>.js'
+        dest: 'build/<%= filename %>-tpls-<%= pkg.version %>.js'
       }
     },
     copy: {
@@ -94,7 +93,7 @@ module.exports = function(grunt) {
           expand: true,
           src: ['**/*.html', '**/*.js'],
           cwd: 'misc/demo/',
-          dest: '<%= dist %>/'
+          dest: 'build/'
         }]
       },
       demoassets: {
@@ -103,7 +102,7 @@ module.exports = function(grunt) {
           //Don't re-copy code files, we process those
           src: ['**/**/*', '!**/*.html', '!**/*.js'],
           cwd: 'misc/demo',
-          dest: '<%= dist %>/'
+          dest: 'build/'
         }]
       }
     },
@@ -111,17 +110,17 @@ module.exports = function(grunt) {
       options: {
         banner: '<%= meta.banner %>'
       },
-      dist:{
-        src:['<%= concat.dist.dest %>'],
-        dest:'<%= dist %>/<%= filename %>-<%= pkg.version %>.min.js'
+      build:{
+        src:['<%= concat.build.dest %>'],
+        dest:'build/<%= filename %>-<%= pkg.version %>.min.js'
       },
-      dist_tpls:{
-        src:['<%= concat.dist_tpls.dest %>'],
-        dest:'<%= dist %>/<%= filename %>-tpls-<%= pkg.version %>.min.js'
+      build_tpls:{
+        src:['<%= concat.build_tpls.dest %>'],
+        dest:'build/<%= filename %>-tpls-<%= pkg.version %>.min.js'
       }
     },
     html2js: {
-      dist: {
+      build: {
         options: {
           module: null, // no bundle module for all the html2js templates
           base: '.',
@@ -129,7 +128,7 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          src: ['template/**/*.html'],
+          src: ['build/compiled-template/**/*.html'],
           ext: '.html.js'
         }]
       }
@@ -198,10 +197,10 @@ module.exports = function(grunt) {
     },
     ngdocs: {
       options: {
-        dest: '<%= dist %>/<%= ngdocrelpath %>',
+        dest: 'build/<%= ngdocrelpath %>',
         scripts: [
           'angular.js',
-          '<%= concat.dist_tpls.dest %>'
+          '<%= concat.build_tpls.dest %>'
         ],
         styles: [
           'docs/css/style.css'
@@ -300,9 +299,9 @@ module.exports = function(grunt) {
       moduleName: enquote(grunt.config('meta.ns') + '.' + name),
       displayName: ucwords(breakup(name, ' ')),
       srcFiles: grunt.file.expand('src/'+name+'/*.js'),
-      tplFiles: grunt.file.expand('template/'+name+'/'+ preferredLocale + '/*.html'),
-      tpljsFiles: grunt.file.expand('template/'+name+'/'+ preferredLocale + '/*.html.js'),
-      tplModules: grunt.file.expand('template/'+name+'/'+ preferredLocale + '/*.html').map(renameTemplateModule).map(enquote),
+      tplFiles: grunt.file.expand('build/compiled-template/'+name+'/'+ preferredLocale + '/*.html'),
+      tpljsFiles: grunt.file.expand('build/compiled-template/'+name+'/'+ preferredLocale + '/*.html.js'),
+      tplModules: grunt.file.expand('build/compiled-template/'+name+'/'+ preferredLocale + '/*.html').map(renameTemplateModule).map(enquote),
       dependencies: dependenciesForModule(name),
       docs: {
         md: grunt.file.expand('src/'+name+'/docs/*.md')
@@ -346,10 +345,6 @@ module.exports = function(grunt) {
   }
 
   // config overrides
-  grunt.registerTask('dist', 'Override dist directory', function() {
-    var dir = this.args[0];
-    if (dir) { grunt.config('dist', dir); }
-  });
   grunt.registerTask('preferredLocale', 'Override preferred locale', function(locale) {
     if (!locale) { return; }
 
@@ -370,7 +365,7 @@ module.exports = function(grunt) {
   function getDirectiveTemplateNames(){
     return grunt.file.expand({
       filter: 'isDirectory', cwd: '.'
-    }, 'resource/*').map(function(dir) {
+    }, 'template/*').map(function(dir) {
       return dir.split('/')[1];
     });
   }
@@ -380,12 +375,12 @@ module.exports = function(grunt) {
       templates.forEach(function(t){
           var il8ntask = {
               options: {
-                  messagesPath: 'resource/' + t + '/translation',
-                  basePath: 'resource/' + t
+                  messagesPath: 'template/' + t + '/translation',
+                  basePath: 'template/' + t
               }
           };
           il8ntask.files = {};
-          il8ntask.files['template/' + t] = ['resource/' + t + '/' + t + '.html'];
+          il8ntask.files['build/compiled-template/' + t] = ['template/' + t + '/' + t + '.html'];
           grunt.config('i18n_template.' + t, il8ntask);
       });
       grunt.task.run(['i18n_template']);
@@ -425,10 +420,10 @@ module.exports = function(grunt) {
     var srcFiles = _.pluck(modules, 'srcFiles');
     var tpljsFiles = _.pluck(modules, 'tpljsFiles');
     //Set the concat task to concatenate the given src modules
-    grunt.config('concat.dist.src', grunt.config('concat.dist.src')
+    grunt.config('concat.build.src', grunt.config('concat.build.src')
                  .concat(srcFiles));
     //Set the concat-with-templates task to concat the given src & tpl modules
-    grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src')
+    grunt.config('concat.build_tpls.src', grunt.config('concat.build_tpls.src')
                  .concat(srcFiles).concat(tpljsFiles));
 
       var preferredLocale = grunt.config('locales.preferred');
@@ -443,14 +438,14 @@ module.exports = function(grunt) {
               src: _.chain(tpljsFiles).flatten().map(function(file){
                   return file.replace('/' + preferredLocale + '/', '/' + locale + '/');
               }).value(),
-              dest: '<%= dist %>/<%= filename %>-' + locale + '-tpls-<%= pkg.version %>.js'
+              dest: 'build/<%= filename %>-' + locale + '-tpls-<%= pkg.version %>.js'
           };
-          grunt.config('concat.dist_tpls_' + targetSuffix, concatTarget);
+          grunt.config('concat.build_tpls_' + targetSuffix, concatTarget);
           var uglifyTarget = {
-              src:['<%= concat.dist_tpls_' + targetSuffix + '.dest %>'],
-              dest:'<%= dist %>/<%= filename %>-' + locale + '-tpls-<%= pkg.version %>.min.js'
+              src:['<%= concat.build_tpls_' + targetSuffix + '.dest %>'],
+              dest:'build/<%= filename %>-' + locale + '-tpls-<%= pkg.version %>.min.js'
           };
-          grunt.config('uglify.dist_tpls_' + targetSuffix, uglifyTarget);
+          grunt.config('uglify.build_tpls_' + targetSuffix, uglifyTarget);
       });
 
     grunt.task.run(['concat', 'uglify']);
@@ -515,7 +510,7 @@ module.exports = function(grunt) {
     //clean
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.config('clean', {
-        build: ['<%= dist %>', 'dist']
+        build: ['build', 'dist']
     });
 
     //connect
@@ -527,7 +522,7 @@ module.exports = function(grunt) {
             keepalive: true,
             hostname: 'localhost',
             port: 8000,
-            base: this.flags.release ? 'dist/packaged/docs' :  '<%= dist %>'
+            base: this.flags.release ? 'dist/docs' :  'build'
         };
         grunt.config('connect.server', {
             options: _.extend(defaults, this.flags)
@@ -549,24 +544,24 @@ module.exports = function(grunt) {
             options: {
                 //process files with gruntfile config
                 process: grunt.template.process,
-                rootdir: 'dist/packaged/lib/'
+                rootdir: 'dist/lib/'
             },
             files: [{
                 expand: true,
                 src: ['*.js'],
-                cwd: '<%= dist %>',
+                cwd: 'build',
                 dest: '<%=copy.release_lib.options.rootdir%>js',
                 rename: stripVs
             }, {
                 expand: true,
                 src: ['*.css'],
-                cwd: '<%= dist %>',
+                cwd: 'build',
                 dest: '<%=copy.release_lib.options.rootdir%>css',
                 rename: stripVs
             }, {
                 expand: true,
                 src: ['*.jpg', '*.jpeg', '*.png', '*.ico', '*.gif'],
-                cwd: '<%= dist %>',
+                cwd: 'build',
                 dest: '<%=copy.release_lib.options.rootdir%>image',
                 rename: stripVs
             }, {
@@ -578,9 +573,9 @@ module.exports = function(grunt) {
         grunt.config('copy.release_docs', {
             files: [{
                 expand: true,
-                cwd: '<%= dist %>',
+                cwd: 'build',
                 src: ['index.html', '*-tpls-*.js', 'assets/**/*', '<%= ngdocrelpath %>/**/*'],
-                dest: 'dist/packaged/docs'
+                dest: 'dist/docs'
             }]
         });
 
