@@ -8,4 +8,4 @@
   - npm install --quiet -g grunt-cli karma
   - npm install
 
- script: grunt dist:build default
+ script: grunt default
