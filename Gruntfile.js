@@ -12,6 +12,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-ngdocs');
   grunt.loadNpmTasks('grunt-ddescribe-iit');
+  grunt.loadNpmTasks('grunt-i18n-template');
 
   // Project configuration.
   grunt.util.linefeed = '\n';
@@ -24,6 +25,11 @@ module.exports = function(grunt) {
     uibsversion: '0.11.0',
     modules: [],//to be filled in by build task
     pkg: pkg,
+    locales: {
+      // controls which translations will be concatenated into the main js distributable file
+      // change preference by calling preferredLocale
+      preferred: 'en'
+    },
     git: {
       account: 'christianacca',
       url: 'https://github.com/<%=git.account%>/<%=pkg.name%>',
@@ -118,7 +124,8 @@ module.exports = function(grunt) {
       dist: {
         options: {
           module: null, // no bundle module for all the html2js templates
-          base: '.'
+          base: '.',
+          rename: renameTemplateModule
         },
         files: [{
           expand: true,
@@ -215,12 +222,27 @@ module.exports = function(grunt) {
       files: [
         'src/**/*.spec.js'
       ]
-    }
+    },
+      i18n_template: {
+          // note: the targets for this task are dynamically created by our il8n task
+          options: {
+              locales: ['en', 'zh-CN'], // extend these with your own translations by calling supportedLocales grunt task
+              defaultLocale: 'en',
+              forceRefresh: true
+          }
+      }
   });
+
+  function renameTemplateModule(modulePath) {
+    var _ = grunt.util._;
+    var segments = modulePath.split('/');
+    var fileName = _.last(segments);
+    return 'app/vendor/angular-ccacca/autoRefresh/' + fileName;
+  }
 
   //register before and after test tasks so we've don't have to change cli
   //options on the goole's CI server
-  grunt.registerTask('before-test', ['clean', 'enforce', 'ddescribe-iit', 'jshint', 'html2js']);
+  grunt.registerTask('before-test', ['clean', 'enforce', 'ddescribe-iit', 'jshint', 'i18n', 'html2js']);
   grunt.registerTask('after-test', ['build', 'copy', 'ngdocs']);
 
   //Rename our watch task to 'delta', then make actual 'watch'
@@ -271,15 +293,16 @@ module.exports = function(grunt) {
       return '"' + str + '"';
     }
 
-    var docCtx = getDocDataContext(name);
-    var module = {
+      var docCtx = getDocDataContext(name);
+      var preferredLocale = grunt.config('locales.preferred');
+      var module = {
       name: name,
       moduleName: enquote(grunt.config('meta.ns') + '.' + name),
       displayName: ucwords(breakup(name, ' ')),
       srcFiles: grunt.file.expand('src/'+name+'/*.js'),
-      tplFiles: grunt.file.expand('template/'+name+'/*.html'),
-      tpljsFiles: grunt.file.expand('template/'+name+'/*.html.js'),
-      tplModules: grunt.file.expand('template/'+name+'/*.html').map(enquote),
+      tplFiles: grunt.file.expand('template/'+name+'/'+ preferredLocale + '/*.html'),
+      tpljsFiles: grunt.file.expand('template/'+name+'/'+ preferredLocale + '/*.html.js'),
+      tplModules: grunt.file.expand('template/'+name+'/'+ preferredLocale + '/*.html').map(renameTemplateModule).map(enquote),
       dependencies: dependenciesForModule(name),
       docs: {
         md: grunt.file.expand('src/'+name+'/docs/*.md')
@@ -322,9 +345,50 @@ module.exports = function(grunt) {
     return deps;
   }
 
+  // config overrides
   grunt.registerTask('dist', 'Override dist directory', function() {
     var dir = this.args[0];
     if (dir) { grunt.config('dist', dir); }
+  });
+  grunt.registerTask('preferredLocale', 'Override preferred locale', function(locale) {
+    if (!locale) { return; }
+
+    var _ = grunt.util._;
+    var builtinLocales = grunt.config('i18n_template.options.locales');
+    if (!_(builtinLocales).contains(locale)){
+      grunt.fatal('Preferred locale not currently supported');
+    }
+    grunt.config('locales.preferred', locale);
+  });
+  grunt.registerTask('supportedLocales', 'Override supported locales', function() {
+      var _ = grunt.util._;
+      var defaultLocale = grunt.config('i18n_template.options.defaultLocale');
+      var supportedLocales = _.uniq(this.args.concat(defaultLocale));
+      grunt.config('i18n_template.options.locales', supportedLocales);
+  });
+
+  function getDirectiveTemplateNames(){
+    return grunt.file.expand({
+      filter: 'isDirectory', cwd: '.'
+    }, 'resource/*').map(function(dir) {
+      return dir.split('/')[1];
+    });
+  }
+
+  grunt.registerTask('i18n', 'Localises templates with language translations', function(){
+      var templates = getDirectiveTemplateNames();
+      templates.forEach(function(t){
+          var il8ntask = {
+              options: {
+                  messagesPath: 'resource/' + t + '/translation',
+                  basePath: 'resource/' + t
+              }
+          };
+          il8ntask.files = {};
+          il8ntask.files['template/' + t] = ['resource/' + t + '/' + t + '.html'];
+          grunt.config('i18n_template.' + t, il8ntask);
+      });
+      grunt.task.run(['i18n_template']);
   });
 
   grunt.registerTask('build', 'Create build files', function() {
@@ -366,6 +430,28 @@ module.exports = function(grunt) {
     //Set the concat-with-templates task to concat the given src & tpl modules
     grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src')
                  .concat(srcFiles).concat(tpljsFiles));
+
+      var preferredLocale = grunt.config('locales.preferred');
+      var sataliteLocales = _(grunt.config('i18n_template.options.locales')).without(preferredLocale);
+      var templates = getDirectiveTemplateNames();
+      sataliteLocales.forEach(function(locale){
+          var targetSuffix = locale.replace('-', '_');
+          var concatTarget = {
+              options: {
+                  banner: '<%= meta.banner %>\n<%= meta.tplmodules %>\n'
+              },
+              src: _.chain(tpljsFiles).flatten().map(function(file){
+                  return file.replace('/' + preferredLocale + '/', '/' + locale + '/');
+              }).value(),
+              dest: '<%= dist %>/<%= filename %>-' + locale + '-tpls-<%= pkg.version %>.js'
+          };
+          grunt.config('concat.dist_tpls_' + targetSuffix, concatTarget);
+          var uglifyTarget = {
+              src:['<%= concat.dist_tpls_' + targetSuffix + '.dest %>'],
+              dest:'<%= dist %>/<%= filename %>-' + locale + '-tpls-<%= pkg.version %>.min.js'
+          };
+          grunt.config('uglify.dist_tpls_' + targetSuffix, uglifyTarget);
+      });
 
     grunt.task.run(['concat', 'uglify']);
   });

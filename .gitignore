@@ -1,7 +1,6 @@
 lib-cov
 *.seed
 *.log
-*.csv
 *.dat
 *.out
 *.pid
@@ -22,4 +21,4 @@ coverage/
 node_modules
 npm-debug.log
 
-template/**/*.js
+template

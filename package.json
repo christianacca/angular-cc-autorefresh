@@ -7,12 +7,12 @@
     "refresh",
     "schedule"
   ],
-  "version": "0.1.4",
+  "version": "0.2.0",
   "author": "Christian Crowhurst <ghp@christianacca.e4ward.com> (http://codingmonster.co.uk)",
   "homepage": "http://projects.codingmonster.co.uk/angular-cc-autorefresh",
-  "repository" : { 
-    "type" : "git", 
-    "url" : "https://github.com/christianacca/angular-cc-autorefresh.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christianacca/angular-cc-autorefresh.git"
   },
   "dependencies": {},
   "devDependencies": {
@@ -27,11 +27,13 @@
     "grunt-conventional-changelog": "~0.1.2",
     "grunt-ddescribe-iit": "0.0.4",
     "grunt-html2js": "~0.2.0",
+    "grunt-i18n-template": "^0.1.7",
     "grunt-karma": "~0.4.4",
     "grunt-ngdocs": "^0.2.2",
     "node-markdown": "0.1.1",
     "semver": "~2.2.0",
-    "shelljs": "~0.2.0"
+    "shelljs": "~0.2.0",
+    "string": "^2.0.1"
   },
   "license": "MIT"
 }

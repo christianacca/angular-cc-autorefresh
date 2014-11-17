@@ -2,15 +2,15 @@
     <button type="button" class="btn btn-default"
             ng-click="ctrl.togglePause()" 
             ng-disabled="ctrl.isDisabled || ctrl.isRefreshing" 
-            title="{{ctrl.isPaused ? langs.resumeTitle : langs.pauseTitle}}">
-        <i class="glyphicon" ng-class="{ 
+            title="{{ctrl.isPaused ? '[[Resume]]' : '[[Pause]]'}}">
+        <i class="glyphicon" ng-class="{
             'glyphicon-pause': !ctrl.isPaused, 
             'glyphicon-play': ctrl.isPaused }"></i>
     </button>
     <button type="button" class="btn btn-default" 
             ng-click="ctrl.isRefreshing ? ctrl.cancelRefresh() : ctrl.refresh()" 
             ng-disabled="ctrl.isDisabled" 
-            title="{{ctrl.isRefreshing ? langs.cancelTitle: langs.refreshTitle}}"
+            title="{{ctrl.isRefreshing ? '[[Cancel refresh]]': '[[Refresh now]]'}}"
             cc-transclude-append>
         <i class="glyphicon" ng-class="{ 
             'glyphicon-refresh': !ctrl.isRefreshing, 
