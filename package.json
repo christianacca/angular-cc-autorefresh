@@ -7,7 +7,7 @@
     "refresh",
     "schedule"
   ],
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Christian Crowhurst <ghp@christianacca.e4ward.com> (http://codingmonster.co.uk)",
   "homepage": "http://projects.codingmonster.co.uk/angular-cc-autorefresh",
   "repository": {
@@ -16,6 +16,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "conventional-changelog": "0.0.11",
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "~0.3.0",
@@ -30,6 +31,8 @@
     "grunt-i18n-template": "^0.1.7",
     "grunt-karma": "~0.4.4",
     "grunt-ngdocs": "^0.2.2",
+    "gulp": "^3.8.10",
+    "minimist": "^1.1.0",
     "node-markdown": "0.1.1",
     "semver": "~2.2.0",
     "shelljs": "~0.2.0",
