@@ -14,81 +14,93 @@ angular.module('cc.autorefresh.demo', ['cc.autorefresh', 'ngMockE2E', 'ui.bootst
 
 var builderUrl = "http://50.116.42.77:3001";
 
-function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
-  $scope.showBuildModal = function() {
-    var modalInstance = $modal.open({
-      templateUrl: 'buildModal.html',
-      controller: 'SelectModulesCtrl',
-      resolve: {
-        modules: function() {
-          return $http.get(builderUrl + "/api/bootstrap").then(function(response) {
-            return response.data.modules;
-          });
+(function(){
+  angular.module('cc.autorefresh.demo').controller('MainCtrl', MainCtrl);
+
+  function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
+    $scope.showBuildModal = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'buildModal.html',
+        controller: 'SelectModulesCtrl',
+        resolve: {
+          modules: function() {
+            return $http.get(builderUrl + "/api/bootstrap").then(function(response) {
+              return response.data.modules;
+            });
+          }
         }
+      });
+    };
+
+    $scope.showDownloadModal = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'downloadModal.html',
+        controller: 'DownloadCtrl'
+      });
+    };
+  }
+})();
+
+(function(){
+  angular.module('cc.autorefresh.demo').controller('SelectModulesCtrl', SelectModulesCtrl);
+
+  function SelectModulesCtrl($scope, $modalInstance, modules) {
+    $scope.selectedModules = [];
+    $scope.modules = modules;
+
+    $scope.selectedChanged = function(module, selected) {
+      if (selected) {
+        $scope.selectedModules.push(module);
+      } else {
+        $scope.selectedModules.splice($scope.selectedModules.indexOf(module), 1);
       }
-    });
-  };
+    };
 
-  $scope.showDownloadModal = function() {
-    var modalInstance = $modal.open({
-      templateUrl: 'downloadModal.html',
-      controller: 'DownloadCtrl'
-    });
-  };
-}
+    $scope.downloadBuild = function () {
+      $modalInstance.close($scope.selectedModules);
+    };
 
-var SelectModulesCtrl = function($scope, $modalInstance, modules) {
-  $scope.selectedModules = [];
-  $scope.modules = modules;
+    $scope.cancel = function () {
+      $modalInstance.dismiss();
+    };
 
-  $scope.selectedChanged = function(module, selected) {
-    if (selected) {
-      $scope.selectedModules.push(module);
-    } else {
-      $scope.selectedModules.splice($scope.selectedModules.indexOf(module), 1);
-    }
-  };
+    $scope.download = function (selectedModules) {
+      var downloadUrl = builderUrl + "/api/bootstrap/download?";
+      angular.forEach(selectedModules, function(module) {
+        downloadUrl += "modules=" + module + "&";
+      });
+      return downloadUrl;
+    };
+  }
+})();
 
-  $scope.downloadBuild = function () {
-    $modalInstance.close($scope.selectedModules);
-  };
+(function(){
+  angular.module('cc.autorefresh.demo').controller('DownloadCtrl', DownloadCtrl);
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss();
-  };
+  function DownloadCtrl($scope, $modalInstance) {
+    $scope.options = {
+      minified: true,
+      tpls: true
+    };
 
-  $scope.download = function (selectedModules) {
-    var downloadUrl = builderUrl + "/api/bootstrap/download?";
-    angular.forEach(selectedModules, function(module) {
-      downloadUrl += "modules=" + module + "&";
-    });
-    return downloadUrl;
-  };
-};
+    $scope.download = function (version) {
+      var options = $scope.options;
 
-var DownloadCtrl = function($scope, $modalInstance) {
-  $scope.options = {
-    minified: true,
-    tpls: true
-  };
+      var downloadUrl = ['cc-autorefresh-'];
+      if (options.tpls) {
+        downloadUrl.push('tpls-');
+      }
+      downloadUrl.push(version);
+      if (options.minified) {
+        downloadUrl.push('.min');
+      }
+      downloadUrl.push('.js');
 
-  $scope.download = function (version) {
-    var options = $scope.options;
+      return downloadUrl.join('');
+    };
 
-    var downloadUrl = ['cc-autorefresh-'];
-    if (options.tpls) {
-      downloadUrl.push('tpls-');
-    }
-    downloadUrl.push(version);
-    if (options.minified) {
-      downloadUrl.push('.min');
-    }
-    downloadUrl.push('.js');
-
-    return downloadUrl.join('');
-  };
-
-  $scope.cancel = function () {
-    $modalInstance.dismiss();
-  };
-};
+    $scope.cancel = function () {
+      $modalInstance.dismiss();
+    };
+  }
+})();

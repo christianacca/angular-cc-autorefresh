@@ -8,11 +8,11 @@
     <meta name="description" content="AngularJS (Angular) directives for scheduling a routine to refresh $scope. No 3rd party JS dependencies (jQuery, bootstrap JS) required">
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-touch.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-mocks.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-touch.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-mocks.js"></script>
     <script src="http://cdn.jsdelivr.net/angular.bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="cc-autorefresh-tpls-0.2.0.js"></script>
+    <script src="cc-autorefresh-tpls-0.3.0.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
     <script src="assets/demoBootstrap.js"></script>
@@ -74,7 +74,7 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/christianacca/angular-cc-autorefresh"><i class="glyphicon glyphicon-new-window"></i> Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.2.0)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.3.0)</small>
                 </button>
                 <!--<button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>-->
             </p>
@@ -146,8 +146,8 @@
                     <ul>
                         <li><a href="http://angularjs.org/">AngularJS <i class="glyphicon glyphicon-new-window"><i></i></i></a>
                             <ul>
-                                <li>Requires AngularJS 1.2.x, tested with 1.2.23</li>
-                                <li>eg: <code>&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js&quot;&gt;&lt;/script&gt;</code></li>
+                                <li>Requires AngularJS 1.2.x, tested with 1.4.8</li>
+                                <li>eg: <code>&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js&quot;&gt;&lt;/script&gt;</code></li>
                             </ul>
                         </li>
                         <li><a href="http://getbootstrap.com/">Bootstrap’s <strong>CSS</strong> <i class="glyphicon glyphicon-new-window"><i></i></i></a>
@@ -164,7 +164,7 @@
                         </li>
                         <li>Add the reference (remember to replace <em>'your/path'</em>). eg:
                             <ul>
-                                <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.2.0.min.js&quot;&gt;&lt;/script&gt;</code>
+                                <li><code>&lt;script src=&quot;your/path/cc-autorefresh-tpls-0.3.0.min.js&quot;&gt;&lt;/script&gt;</code>
                                 </li>
                             </ul>
                         </li>
@@ -190,16 +190,14 @@
                                 <div ng-controller="AutoRefreshBtnDemoCtrl as vm">
 
     <div class="page-header">
-        <h1>
+        <h1 cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
+            refresh-interval="vm.lists[0].interval"
+            refresh-model="vm.lists[0].data"
+            refresh-on-refreshed="vm.lists[0].setLastRefreshed(eventArgs)">
 
             {{vm.lists[0].title}}
 
-            <cc-auto-refresh-btn
-                    class="btn-group-sm"
-                    cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
-                    refresh-interval="vm.lists[0].interval"
-                    refresh-model="vm.lists[0].data"
-                    refresh-on-refreshed="vm.lists[0].setLastRefreshed(eventArgs)">
+            <cc-auto-refresh-btn class="btn-group-sm">
                 {{vm.lists[0].lastRefresh | date:'HH:mm:ss'}}
             </cc-auto-refresh-btn>
 
@@ -214,17 +212,17 @@
             {{vm.lists[1].title}}
             <small> As at: {{ vm.lists[1].lastRefresh | date:'yyyy-MM-dd HH:mm:ss'}}</small>
 
-            <cc-auto-refresh-btn
-                    class="btn-group-sm"
-                    cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
-                    refresh-interval="vm.lists[1].interval"
-                    refresh-paused="vm.lists[1].paused"
-                    refresh-model="vm.lists[1].data"
-                    refresh-busy="vm.lists[1].refreshBusy"
-                    refresh-on-refreshed="vm.lists[1].setLastRefreshed(eventArgs)"
-                    ng-disabled="vm.lists[1].listDisabled"
-                    ng-hide="vm.lists[1].hideButton">
-            </cc-auto-refresh-btn>
+            <div style="display: inline-block"
+                 cc-auto-refresh-fn="vm.refreshList(cancellationToken)"
+                 refresh-interval="vm.lists[1].interval"
+                 refresh-paused="vm.lists[1].paused"
+                 refresh-model="vm.lists[1].data"
+                 refresh-busy="vm.lists[1].refreshBusy"
+                 refresh-on-refreshed="vm.lists[1].setLastRefreshed(eventArgs)"
+                 ng-disabled="vm.lists[1].listDisabled"
+                 ng-hide="vm.lists[1].hideButton">
+                <cc-auto-refresh-btn class="btn-group-sm"></cc-auto-refresh-btn>
+            </div>
 
         </h1>
     </div>
@@ -282,7 +280,7 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.2.0', 'ccAutoRefreshBtn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.4.8', '3.1.1', '0.3.0', 'ccAutoRefreshBtn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -290,16 +288,14 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
                                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AutoRefreshBtnDemoCtrl as vm&quot;&gt;
 
     &lt;div class=&quot;page-header&quot;&gt;
-        &lt;h1&gt;
+        &lt;h1 cc-auto-refresh-fn=&quot;vm.refreshList(cancellationToken)&quot;
+            refresh-interval=&quot;vm.lists[0].interval&quot;
+            refresh-model=&quot;vm.lists[0].data&quot;
+            refresh-on-refreshed=&quot;vm.lists[0].setLastRefreshed(eventArgs)&quot;&gt;
 
             {{vm.lists[0].title}}
 
-            &lt;cc-auto-refresh-btn
-                    class=&quot;btn-group-sm&quot;
-                    cc-auto-refresh-fn=&quot;vm.refreshList(cancellationToken)&quot;
-                    refresh-interval=&quot;vm.lists[0].interval&quot;
-                    refresh-model=&quot;vm.lists[0].data&quot;
-                    refresh-on-refreshed=&quot;vm.lists[0].setLastRefreshed(eventArgs)&quot;&gt;
+            &lt;cc-auto-refresh-btn class=&quot;btn-group-sm&quot;&gt;
                 {{vm.lists[0].lastRefresh | date:&#x27;HH:mm:ss&#x27;}}
             &lt;/cc-auto-refresh-btn&gt;
 
@@ -314,17 +310,17 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
             {{vm.lists[1].title}}
             &lt;small&gt; As at: {{ vm.lists[1].lastRefresh | date:&#x27;yyyy-MM-dd HH:mm:ss&#x27;}}&lt;/small&gt;
 
-            &lt;cc-auto-refresh-btn
-                    class=&quot;btn-group-sm&quot;
-                    cc-auto-refresh-fn=&quot;vm.refreshList(cancellationToken)&quot;
-                    refresh-interval=&quot;vm.lists[1].interval&quot;
-                    refresh-paused=&quot;vm.lists[1].paused&quot;
-                    refresh-model=&quot;vm.lists[1].data&quot;
-                    refresh-busy=&quot;vm.lists[1].refreshBusy&quot;
-                    refresh-on-refreshed=&quot;vm.lists[1].setLastRefreshed(eventArgs)&quot;
-                    ng-disabled=&quot;vm.lists[1].listDisabled&quot;
-                    ng-hide=&quot;vm.lists[1].hideButton&quot;&gt;
-            &lt;/cc-auto-refresh-btn&gt;
+            &lt;div style=&quot;display: inline-block&quot;
+                 cc-auto-refresh-fn=&quot;vm.refreshList(cancellationToken)&quot;
+                 refresh-interval=&quot;vm.lists[1].interval&quot;
+                 refresh-paused=&quot;vm.lists[1].paused&quot;
+                 refresh-model=&quot;vm.lists[1].data&quot;
+                 refresh-busy=&quot;vm.lists[1].refreshBusy&quot;
+                 refresh-on-refreshed=&quot;vm.lists[1].setLastRefreshed(eventArgs)&quot;
+                 ng-disabled=&quot;vm.lists[1].listDisabled&quot;
+                 ng-hide=&quot;vm.lists[1].hideButton&quot;&gt;
+                &lt;cc-auto-refresh-btn class=&quot;btn-group-sm&quot;&gt;&lt;/cc-auto-refresh-btn&gt;
+            &lt;/div&gt;
 
         &lt;/h1&gt;
     &lt;/div&gt;
@@ -363,15 +359,15 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
                                     </tab>
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
-                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;cc.autorefresh.demo&#x27;).controller(&#x27;AutoRefreshBtnDemoCtrl&#x27;, function ($q, $http) {
-    &#x27;use strict&#x27;;
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&quot;cc.autorefresh.demo&quot;).controller(&quot;AutoRefreshBtnDemoCtrl&quot;, function ($q, $http) {
+    &quot;use strict&quot;;
 
     var vm = this;
 
     function refreshList(cancellationToken) {
         var request = {
-            url: &#x27;/items&#x27;,
-            method: &#x27;GET&#x27;,
+            url: &quot;/items&quot;,
+            method: &quot;GET&quot;,
             timeout: cancellationToken
         };
         return $http(request).then(function (response) {
@@ -388,13 +384,13 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
 
         vm.lists = [{
                 interval: 5000,
-                title: &#x27;List 1&#x27;,
-                data: [&#x27;Item 0&#x27;],
+                title: &quot;List 1&quot;,
+                data: [&quot;Item 0&quot;],
                 lastRefresh: new Date()
             }, {
                 interval: 5000,
-                title: &#x27;List 2&#x27;,
-                data: [&#x27;Item 0&#x27;],
+                title: &quot;List 2&quot;,
+                data: [&quot;Item 0&quot;],
                 lastRefresh: new Date()
             }];
         vm.lists[0].setLastRefreshed = setLastRefreshed.bind(null, vm.lists[0]);
@@ -407,15 +403,16 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
 
         var counter = 0;
         // fakes a backend
-        $httpBackend.whenGET(&#x27;/items&#x27;).respond(function () {
+        $httpBackend.whenGET(&quot;/items&quot;).respond(function () {
             return  [
                 200,
-                JSON.stringify([&#x27;Item &#x27; + (++counter)]),
+                JSON.stringify([&quot;Item &quot; + (++counter)]),
                 {},
-                &#x27;OK&#x27;
+                &quot;OK&quot;
             ];
         });
-    });</code></pre>
+    });
+</code></pre>
                                         </div>
                                         <h4>Demo Bootstrap</h4>
                                         <div plunker-content="bootstrapjs">
@@ -462,15 +459,15 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
                             </div>
                         </div>
                     </section>
-                    <script>angular.module('cc.autorefresh.demo').controller('AutoRefreshBtnDemoCtrl', function ($q, $http) {
-    'use strict';
+                    <script>angular.module("cc.autorefresh.demo").controller("AutoRefreshBtnDemoCtrl", function ($q, $http) {
+    "use strict";
 
     var vm = this;
 
     function refreshList(cancellationToken) {
         var request = {
-            url: '/items',
-            method: 'GET',
+            url: "/items",
+            method: "GET",
             timeout: cancellationToken
         };
         return $http(request).then(function (response) {
@@ -487,13 +484,13 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
 
         vm.lists = [{
                 interval: 5000,
-                title: 'List 1',
-                data: ['Item 0'],
+                title: "List 1",
+                data: ["Item 0"],
                 lastRefresh: new Date()
             }, {
                 interval: 5000,
-                title: 'List 2',
-                data: ['Item 0'],
+                title: "List 2",
+                data: ["Item 0"],
                 lastRefresh: new Date()
             }];
         vm.lists[0].setLastRefreshed = setLastRefreshed.bind(null, vm.lists[0]);
@@ -506,15 +503,16 @@ that enables the user to pause and refresh on demand, and to cancel a refresh in
 
         var counter = 0;
         // fakes a backend
-        $httpBackend.whenGET('/items').respond(function () {
+        $httpBackend.whenGET("/items").respond(function () {
             return  [
                 200,
-                JSON.stringify(['Item ' + (++counter)]),
+                JSON.stringify(["Item " + (++counter)]),
                 {},
-                'OK'
+                "OK"
             ];
         });
-    });</script>
+    });
+</script>
                 
                     <section id="ccAutoRefreshFn">
                         <div class="page-header">
@@ -579,7 +577,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.23', '3.1.1', '0.2.0', 'ccAutoRefreshFn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.4.8', '3.1.1', '0.3.0', 'ccAutoRefreshFn')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -616,8 +614,8 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
                                     </tab>
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
-                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;cc.autorefresh.demo&#x27;).controller(&#x27;AutoRefreshFnDemoCtrl&#x27;, function ($q, $timeout) {
-    &#x27;use strict&#x27;;
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&quot;cc.autorefresh.demo&quot;).controller(&quot;AutoRefreshFnDemoCtrl&quot;, function ($q, $timeout) {
+    &quot;use strict&quot;;
 
     var counter = 0,
         vm = this;
@@ -625,7 +623,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     function refreshList(){
         // simulate async
         return $timeout(function(){
-            return [&#x27;Item &#x27; + (++counter), &#x27;Item &#x27; + (++counter)];
+            return [&quot;Item &quot; + (++counter), &quot;Item &quot; + (++counter)];
         }, 500);
     }
 
@@ -645,7 +643,8 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     }
 
     initialise();
-});</code></pre>
+});
+</code></pre>
                                         </div>
                                         <h4>Demo Bootstrap</h4>
                                         <div plunker-content="bootstrapjs">
@@ -692,8 +691,8 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
                             </div>
                         </div>
                     </section>
-                    <script>angular.module('cc.autorefresh.demo').controller('AutoRefreshFnDemoCtrl', function ($q, $timeout) {
-    'use strict';
+                    <script>angular.module("cc.autorefresh.demo").controller("AutoRefreshFnDemoCtrl", function ($q, $timeout) {
+    "use strict";
 
     var counter = 0,
         vm = this;
@@ -701,7 +700,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     function refreshList(){
         // simulate async
         return $timeout(function(){
-            return ['Item ' + (++counter), 'Item ' + (++counter)];
+            return ["Item " + (++counter), "Item " + (++counter)];
         }, 500);
     }
 
@@ -721,7 +720,8 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     }
 
     initialise();
-});</script>
+});
+</script>
                 
             </div>
         </div>
@@ -774,7 +774,7 @@ to the scope and <code>refresh-interval</code> to control the frequency of execu
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('0.2.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.2.0</a>
+        <a class="btn btn-primary" ng-href="{{download('0.3.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.3.0</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
