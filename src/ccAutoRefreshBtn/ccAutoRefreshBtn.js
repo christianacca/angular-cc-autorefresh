@@ -23,14 +23,9 @@ angular.module("cc.autorefresh.ccAutoRefreshBtn", ["cc.autorefresh.ccAutoRefresh
  * - cancel a refresh in progress
  *
  * ### Parameters
- * For details on all the parameters that this directive accepts see
+ * This directive does not expose parameters itself but instead works in concert with a parent
  * {@link cc.autorefresh.ccAutoRefreshFn.directive:ccAutoRefreshFn ccAutoRefreshFn}
- *
  * @scope
- * @param {expression} ccAutoRefreshFn An expression to schedule for execution.
- * @param {expression} refreshInterval
- *  Angular expression that determines the interval (milliseconds) that `refreshFn` will be executed.
- * @param {expression} refreshModel **Assignable** angular expression to data-bind the value returned by `refreshFn`.
  */
     .directive("ccAutoRefreshBtn", [function () {
         "use strict";
