@@ -7,7 +7,7 @@
     "refresh",
     "schedule"
   ],
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Christian Crowhurst <ghp@christianacca.e4ward.com> (http://codingmonster.co.uk)",
   "homepage": "http://projects.codingmonster.co.uk/angular-cc-autorefresh",
   "repository": {
