@@ -28,7 +28,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "cc.autorefresh.ccAutoRefreshBtn",
       "shortDescription": "Schedule a expression to run every n number of milliseconds and assign the return value to the scope.",
-      "keywords": "accepts angular api assign autorefresh button cancel cc ccautorefreshbtn ccautorefreshfn data-bind demand details determines directive executed execution expression extends interval milliseconds number parameters pause progress refresh refreshfn refreshinterval refreshmodel return returned schedule scope user"
+      "keywords": "api assign autorefresh button cancel cc ccautorefreshbtn ccautorefreshfn concert demand directive expose expression extends milliseconds number parameters parent pause progress refresh return schedule scope user works"
     },
     {
       "section": "api",
