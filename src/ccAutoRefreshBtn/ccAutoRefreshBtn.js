@@ -37,7 +37,7 @@ angular.module("cc.autorefresh.ccAutoRefreshBtn", ["cc.autorefresh.ccAutoRefresh
 
         return {
             restrict: "E",
-            require: "ccAutoRefreshFn",
+            require: "^ccAutoRefreshFn",
             transclude: true,
             replace: true,
             scope: true,
