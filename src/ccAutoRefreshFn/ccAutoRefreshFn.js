@@ -12,10 +12,9 @@ angular.module("cc.autorefresh.ccAutoRefreshFn", [])
         "use strict";
 
         // note: according to the http spec network unavailable error should be returned as a status of 0
-        // note: prior to vs 1.4 there was no way to distinguish between a http request being cancelled and
-        // an error because of network being unavailable. This is very bad as our any exception handling
-        // code will see our 'isHttpCancel' set to true even for network errors :-(
-        var CANCEL_HTTP_STATUS = angular.version.minor > 3 ? -1 : 0;
+        // note: in angular there is no way to distinguish between a $http request being cancelled and an error because
+        // of network being unavailable :-(
+        var CANCEL_OR_NETWORK_ERROR_HTTP_STATUS = angular.version.minor > 3 ? -1 : 0;
 
         var exPoliciesLite = {
             promiseFinExPolicy: $injector.get("$exceptionHandler"),
@@ -24,7 +23,9 @@ angular.module("cc.autorefresh.ccAutoRefreshFn", [])
                     return rejection;
                 }
 
-                return { isHttpCancel: rejection && rejection.status === CANCEL_HTTP_STATUS };
+                return {
+                    isHttpCancelOrNetworkError: rejection && rejection.status === CANCEL_OR_NETWORK_ERROR_HTTP_STATUS
+                };
             }
         };
 
@@ -263,7 +264,10 @@ angular.module("cc.autorefresh.ccAutoRefreshFn", [])
 
                 function maybeStopSchedule(ex) {
                     var formattedEx = exPolicies.httpFailureFormatter(ex);
-                    if (!formattedEx.isHttpCancel) {
+                    // note: I wanted to stop the schedule when there is a network error but there seems to be no
+                    // easy and reliable way to do this. The implication is that the refresh function will continue
+                    // to be called even the network is unavailable
+                    if (!formattedEx.isHttpCancelOrNetworkError) {
                         self.isPaused = true;
                         stopRefreshSchedule();
                     }
