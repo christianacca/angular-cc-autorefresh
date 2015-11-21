@@ -1,5 +1,5 @@
-angular.module('cc.autorefresh.demo').controller('AutoRefreshFnDemoCtrl', function ($q, $timeout) {
-    'use strict';
+angular.module("cc.autorefresh.demo").controller("AutoRefreshFnDemoCtrl", function ($q, $timeout) {
+    "use strict";
 
     var counter = 0,
         vm = this;
@@ -7,7 +7,7 @@ angular.module('cc.autorefresh.demo').controller('AutoRefreshFnDemoCtrl', functi
     function refreshList(){
         // simulate async
         return $timeout(function(){
-            return ['Item ' + (++counter), 'Item ' + (++counter)];
+            return ["Item " + (++counter), "Item " + (++counter)];
         }, 500);
     }
 

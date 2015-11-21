@@ -1,3 +1,4 @@
+/* jshint quotmark: single */
 var markdown = require('node-markdown').Markdown;
 
 module.exports = function(grunt) {

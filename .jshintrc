@@ -6,7 +6,7 @@
   "sub": true,
   "boss": true,
   "eqnull": true,
-  "quotmark": "single",
+  "quotmark": "double",
   "trailing": true,
   "globals": {
     "angular": true
