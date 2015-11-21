@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
   var pkg = grunt.file.readJSON('package.json');
   grunt.initConfig({
-    ngversion: '1.2.23',
+    ngversion: '1.4.8',
     bsversion: '3.1.1',
     uibsversion: '0.11.0',
     modules: [],//to be filled in by build task
