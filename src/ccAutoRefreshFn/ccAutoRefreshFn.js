@@ -11,13 +11,20 @@ angular.module("cc.autorefresh.ccAutoRefreshFn", [])
     .factory("_ccAutoRefreshUtils", ["$injector", function ($injector) {
         "use strict";
 
+        // note: according to the http spec network unavailable error should be returned as a status of 0
+        // note: prior to vs 1.4 there was no way to distinguish between a http request being cancelled and
+        // an error because of network being unavailable. This is very bad as our any exception handling
+        // code will see our 'isHttpCancel' set to true even for network errors :-(
+        var CANCEL_HTTP_STATUS = angular.version.minor > 3 ? -1 : 0;
+
         var exPoliciesLite = {
             promiseFinExPolicy: $injector.get("$exceptionHandler"),
             httpFailureFormatter: function (rejection) {
                 if (rejection instanceof Error) {
                     return rejection;
                 }
-                return { isHttpCancel: rejection && rejection.status === 0 };
+
+                return { isHttpCancel: rejection && rejection.status === CANCEL_HTTP_STATUS };
             }
         };
 
