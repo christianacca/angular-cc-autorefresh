@@ -14,7 +14,7 @@ angular.module('<%=meta.ns%>.demo')
 
                 if (response.config.timeout && response.config.timeout.then) {
                     response.config.timeout.then(function () {
-                        deferResponse.reject({ status: 0});
+                        deferResponse.reject({ status: angular.version.minor > 3 ? -1 : 0});
                     });
                 } else {
                     deferResponse.resolve(response);
